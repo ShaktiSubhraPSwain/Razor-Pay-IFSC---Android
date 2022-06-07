@@ -32,9 +32,9 @@ class BankdetailsViewModel @Inject constructor(
             bankDetailUseCase.invoke(viewModelScope, params) {
                 when (it) {
                     is NetworkResponse.Success -> handleSuccess(it.body)
-                    is NetworkResponse.ApiError -> handleFailure(it.body, "api")
-                    is NetworkResponse.NetworkError -> handleFailure(it.error, "net")
-                    is NetworkResponse.UnknownError -> handleFailure(it.error ?: Throwable(), "un")
+                    is NetworkResponse.ApiError -> handleFailure(it.body)
+                    is NetworkResponse.NetworkError -> handleFailure(it.error)
+                    is NetworkResponse.UnknownError -> handleFailure(it.error ?: Throwable())
                 }
             }
         } catch (e: Exception) {
@@ -46,7 +46,7 @@ class BankdetailsViewModel @Inject constructor(
         _bankDetailsLiveEvent.value = Resource(data = data, status = State.DataState(data))
     }
 
-    private fun handleFailure(throwable: Throwable, mes: String?) {
+    private fun handleFailure(throwable: Throwable) {
         _bankDetailsLiveEvent.value = Resource(throwable = throwable, status = State.ErrorState(throwable))
     }
 
