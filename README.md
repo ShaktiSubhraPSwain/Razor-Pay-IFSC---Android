@@ -21,8 +21,10 @@
     - [X] View Model
     - [X] Use Case
 
+
+
 <div align="center">
-    <img src="https://raw.githubusercontent.com/ShaktiSubhraPSwain/Razor-Pay-IFSC---Android/master/screenshots/razorpay_ifsc.png"/> 
+    <img src="https://raw.githubusercontent.com/ShaktiSubhraPSwain/Razor-Pay-IFSC---Android/master/screenshots/razorpay_ifsc.png" width = "400"/> 
 </div>
   
 
