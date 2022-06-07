@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Razor pay IFSC</string>
+    <string name="submit">submit</string>
+    <string name="ifscCode">IFSC Code</string>
+    <string name="bank">Bank</string>
+    <string name="branch">Branch</string>
+    <string name="address">Address</string>
+    <string name="city">City</string>
+    <string name="district">District</string>
+    <string name="state">State</string>
+    <string name="bankCode">Bank Code</string>
+    <string name="contact">Contact</string>
+</resources>
