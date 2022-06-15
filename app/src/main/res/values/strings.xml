@@ -10,4 +10,5 @@
     <string name="state">State</string>
     <string name="bankCode">Bank Code</string>
     <string name="contact">Contact</string>
+    <string name="notAvailable">Not available</string>
 </resources>

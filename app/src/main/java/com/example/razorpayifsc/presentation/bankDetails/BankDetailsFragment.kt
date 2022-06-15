@@ -1,6 +1,5 @@
 package com.example.razorpayifsc.presentation.bankDetails
 
-import android.R.attr
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,16 +9,17 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.razorpayifsc.presentation.base.SafeObserver
-import com.example.razorpayifsc.bankDetails.entity.BankDetailsEntity
+import com.example.razorpayifsc.data.entity.BankDetailsResponseEntity
 import com.example.razorpayifsc.databinding.FragmentBankBinding
 import com.example.razorpayifsc.presentation.State
 import com.example.razorpayifsc.presentation.base.Resource
 import dagger.hilt.android.AndroidEntryPoint
 import android.text.Editable
 
-import android.R.attr.button
-
 import android.text.TextWatcher
+import com.example.razorpayifsc.R
+import com.example.razorpayifsc.domain.bank_details.model.BankDetailsEntity
+import com.example.razorpayifsc.presentation.callbacks.NetworkStateManager
 
 
 @AndroidEntryPoint
@@ -27,6 +27,7 @@ class BankDetailsFragment : Fragment(), View.OnClickListener {
 
     private lateinit var binding: FragmentBankBinding
     private val viewModel: BankdetailsViewModel by viewModels()
+    lateinit var networkStateManager: NetworkStateManager
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,6 +51,21 @@ class BankDetailsFragment : Fragment(), View.OnClickListener {
             viewLifecycleOwner,
             SafeObserver(this::handleBankDetailsResponse)
         )
+        initNetworkState()
+    }
+
+
+    private fun initNetworkState() {
+        networkStateManager = NetworkStateManager.getInstance()!!
+        networkStateManager.getConnectivityStatus().observe(
+            this,
+            SafeObserver(this::handleNetworkState)
+        )
+    }
+
+    private fun handleNetworkState(status: Boolean) {
+        binding.submitBtn.isEnabled =
+            status && binding.ifscCodeEditText.text.toString().isNotEmpty()
     }
 
     private fun viewListener() {
@@ -57,7 +73,8 @@ class BankDetailsFragment : Fragment(), View.OnClickListener {
 
         binding.ifscCodeEditText.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                binding.submitBtn.isEnabled = s.toString().trim { it <= ' ' }.isNotEmpty()
+                binding.submitBtn.isEnabled =
+                    networkStateManager.isInternetAvailable && s.toString().isNotEmpty()
             }
 
             override fun beforeTextChanged(
@@ -90,8 +107,8 @@ class BankDetailsFragment : Fragment(), View.OnClickListener {
                 bankCityTv.text = it.city
                 bankDistrictTv.text = it.district
                 bankStateTv.text = it.state
-                bankCodeTv.text = it.bankcode
-                contactNoTv.text = it.contact
+                bankCodeTv.text = it.bankCode
+                contactNoTv.text = if (!it.contact.isNullOrEmpty()) it.contact else getString(R.string.notAvailable)
             }
         }
     }

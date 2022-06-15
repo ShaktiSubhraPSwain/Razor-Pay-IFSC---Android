@@ -1,6 +1,6 @@
 package com.example.razorpayifsc.domain.usecases
 
-import com.example.razorpayifsc.bankDetails.entity.BankDetailsEntity
+import com.example.razorpayifsc.data.entity.BankDetailsResponseEntity
 import com.google.gson.Gson
 
 const val BANK_DETAIL_JSON = "{\n" +
@@ -24,7 +24,7 @@ const val BANK_DETAIL_JSON = "{\n" +
         "}"
 
 val gson = Gson()
-fun bankDetailResponse() : BankDetailsEntity = gson.fromJson(BANK_DETAIL_JSON, BankDetailsEntity::class.java)
+fun bankDetailResponse() : BankDetailsResponseEntity = gson.fromJson(BANK_DETAIL_JSON, BankDetailsResponseEntity::class.java)
 val hashMap = HashMap<String, String>().apply {
     put("ifscCode", "KARB0000001")
 }

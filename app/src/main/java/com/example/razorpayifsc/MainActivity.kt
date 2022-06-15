@@ -1,12 +1,14 @@
 package com.example.razorpayifsc
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
+import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
 import com.example.razorpayifsc.databinding.ActivityMainBinding
-import com.example.razorpayifsc.presentation.bankDetails.BankDetailsFragment
+import com.example.razorpayifsc.presentation.base.SafeObserver
+import com.example.razorpayifsc.presentation.callbacks.NetworkStateManager
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,8 +23,21 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        val newFragment: Fragment = BankDetailsFragment()
-        val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
-        ft.add(R.id.container, newFragment).commit()
+        val navController = findNavController(R.id.navHostFragment)
+        NavigationUI.setupActionBarWithNavController(this, navController)
+
+        initNetworkState()
+    }
+
+    private fun initNetworkState() {
+        NetworkStateManager.getInstance()?.getConnectivityStatus()?.observe(this,
+            SafeObserver(this::handleNetworkState)
+        )
+    }
+
+    private fun handleNetworkState(status: Boolean) {
+        if (!status) {
+            Toast.makeText(this, "No internet connection", Toast.LENGTH_LONG).show()
+        }
     }
 }

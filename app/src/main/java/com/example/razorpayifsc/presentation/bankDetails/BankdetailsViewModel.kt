@@ -2,7 +2,9 @@ package com.example.razorpayifsc.presentation.bankDetails
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.razorpayifsc.bankDetails.entity.BankDetailsEntity
+import com.example.razorpayifsc.data.entity.BankDetailsResponseEntity
+import com.example.razorpayifsc.data.mapper.BankDetailsMapper.toDomain
+import com.example.razorpayifsc.domain.bank_details.model.BankDetailsEntity
 import com.example.razorpayifsc.domain.bank_details.usecase.BankDetailUseCase
 import com.example.razorpayifsc.domain.common.NetworkResponse
 import com.example.razorpayifsc.presentation.State
@@ -42,8 +44,9 @@ class BankdetailsViewModel @Inject constructor(
         }
     }
 
-    private fun handleSuccess(data: BankDetailsEntity)  {
-        _bankDetailsLiveEvent.value = Resource(data = data, status = State.DataState(data))
+    private fun handleSuccess(data: BankDetailsResponseEntity)  {
+        val bankMapper = data.toDomain()
+        _bankDetailsLiveEvent.value = Resource(data = bankMapper, status = State.DataState(bankMapper))
     }
 
     private fun handleFailure(throwable: Throwable) {

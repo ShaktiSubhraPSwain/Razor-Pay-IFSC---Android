@@ -3,7 +3,9 @@ package com.example.razorpayifsc.presentation
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.example.razorpayifsc.MainCoroutineRule
-import com.example.razorpayifsc.bankDetails.entity.BankDetailsEntity
+import com.example.razorpayifsc.data.entity.BankDetailsResponseEntity
+import com.example.razorpayifsc.data.mapper.BankDetailsMapper.toDomain
+import com.example.razorpayifsc.domain.bank_details.model.BankDetailsEntity
 import com.example.razorpayifsc.domain.bank_details.repository.BankDetailRepository
 import com.example.razorpayifsc.domain.bank_details.usecase.BankDetailUseCase
 import com.example.razorpayifsc.domain.common.NetworkResponse
@@ -30,6 +32,8 @@ import org.mockito.stubbing.Answer
 
 import org.mockito.Mockito.`when`
 import java.io.IOException
+import java.lang.Exception
+import kotlin.concurrent.thread
 
 class BankDetailsViewModelUnitTest {
 
@@ -57,8 +61,9 @@ class BankDetailsViewModelUnitTest {
 
     private val bankDetailViewModel by lazy { BankdetailsViewModel(bankDetailsUseCase) }
 
+    private val bankDetailsMapper = bankDetailResponse().toDomain()
     private val successBankDetailsResponse: Resource<BankDetailsEntity> =
-        Resource(status = State.DataState(bankDetailResponse()), data = bankDetailResponse())
+        Resource(status = State.DataState(bankDetailsMapper), data = bankDetailsMapper)
     private val errorBankDetailsResponse: Resource<Throwable> =
         Resource(
             throwable = IOException("Not found"),

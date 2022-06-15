@@ -2,8 +2,8 @@ package com.example.razorpayifsc.di
 
 
 import android.content.Context
-import com.example.razorpayifsc.bankDetails.repo.BankDetailApi
-import com.example.razorpayifsc.bankDetails.repo.BankDetailDataRepository
+import com.example.razorpayifsc.data.repo.BankDetailApi
+import com.example.razorpayifsc.data.repo.BankDetailDataRepository
 import com.example.razorpayifsc.domain.bank_details.repository.BankDetailRepository
 import com.example.razorpayifsc.domain.common.NetworkResponseAdapterFactory
 import com.example.razorpayifsc.presentation.App

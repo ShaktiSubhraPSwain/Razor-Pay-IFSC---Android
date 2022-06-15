@@ -1,9 +1,9 @@
-package com.example.razorpayifsc.bankDetails.entity
+package com.example.razorpayifsc.data.entity
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-data class BankDetailsEntity(
+data class BankDetailsResponseEntity(
     @Expose
     @SerializedName("BANK")
     val bank: String = "",
