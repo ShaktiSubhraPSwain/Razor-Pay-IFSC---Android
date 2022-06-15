@@ -7,7 +7,6 @@ import com.example.razorpayifsc.data.repo.BankDetailDataRepository
 import com.example.razorpayifsc.domain.bank_details.repository.BankDetailRepository
 import com.example.razorpayifsc.domain.common.NetworkResponseAdapterFactory
 import com.example.razorpayifsc.presentation.App
-import com.example.razorpayifsc.utils.Constants
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
@@ -24,10 +23,10 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
-@Suppress("unused")
 @InstallIn(SingletonComponent::class)
 class NetworkModule {
 
+    var BASE_URL = "https://raw.githubusercontent.com/Asutosh11/CoroutinesRetrofitWithUnitTest/master/"
     @Singleton
     @Provides
     fun provideApplication(@ApplicationContext app: Context): App {
@@ -37,7 +36,7 @@ class NetworkModule {
     @Provides
     @Singleton
     fun provideRetrofit(client: OkHttpClient): Retrofit {
-        return Retrofit.Builder().baseUrl(Constants.BASE_URL).client(client)
+        return Retrofit.Builder().baseUrl(BASE_URL).client(client)
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
             .addCallAdapterFactory(NetworkResponseAdapterFactory())
             .build()

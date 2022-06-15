@@ -1,0 +1,11 @@
+package com.example.razorpayifsc.domain.analytics
+
+import android.os.Bundle
+import com.example.razorpayifsc.data.repo.analytics.BankAnalytics
+import com.google.firebase.analytics.FirebaseAnalytics
+
+class BankFirebaseAnalytics(var firebaseAnalytics: FirebaseAnalytics): BankAnalytics {
+    override fun logEvent(name: String, bundle: Bundle) {
+        firebaseAnalytics.logEvent("sign_up", bundle)
+    }
+}

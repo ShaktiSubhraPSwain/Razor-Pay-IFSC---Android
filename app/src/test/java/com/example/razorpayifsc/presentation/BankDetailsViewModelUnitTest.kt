@@ -5,6 +5,7 @@ import androidx.lifecycle.Observer
 import com.example.razorpayifsc.MainCoroutineRule
 import com.example.razorpayifsc.data.entity.BankDetailsResponseEntity
 import com.example.razorpayifsc.data.mapper.BankDetailsMapper.toDomain
+import com.example.razorpayifsc.data.repo.analytics.BankAnalytics
 import com.example.razorpayifsc.domain.bank_details.model.BankDetailsEntity
 import com.example.razorpayifsc.domain.bank_details.repository.BankDetailRepository
 import com.example.razorpayifsc.domain.bank_details.usecase.BankDetailUseCase
@@ -50,6 +51,9 @@ class BankDetailsViewModelUnitTest {
     @Mock
     lateinit var bankDetailsObserver: Observer<Resource<BankDetailsEntity>>
 
+    @Mock
+    lateinit var bankAnalytics: BankAnalytics
+
     @Captor
     private val argumentCaptor: ArgumentCaptor<Resource<BankDetailsEntity>>? = null
 
@@ -59,7 +63,7 @@ class BankDetailsViewModelUnitTest {
         BankDetailUseCase(bankDetailRepository)
     }
 
-    private val bankDetailViewModel by lazy { BankdetailsViewModel(bankDetailsUseCase) }
+    private val bankDetailViewModel by lazy { BankdetailsViewModel(bankDetailsUseCase, bankAnalytics) }
 
     private val bankDetailsMapper = bankDetailResponse().toDomain()
     private val successBankDetailsResponse: Resource<BankDetailsEntity> =
