@@ -1,4 +1,4 @@
-package com.example.razorpayifsc.presentation.bankDetails
+package com.example.razorpayifsc.presentation.bankDetails.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,9 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import com.example.razorpayifsc.presentation.base.SafeObserver
-import com.example.razorpayifsc.data.entity.BankDetailsResponseEntity
 import com.example.razorpayifsc.databinding.FragmentBankBinding
 import com.example.razorpayifsc.presentation.State
 import com.example.razorpayifsc.presentation.base.Resource
@@ -17,8 +15,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import android.text.Editable
 
 import android.text.TextWatcher
+import androidx.lifecycle.ViewModelProvider
 import com.example.razorpayifsc.R
 import com.example.razorpayifsc.domain.bank_details.model.BankDetailsEntity
+import com.example.razorpayifsc.presentation.bankDetails.viewmodel.BankdetailsViewModel
 import com.example.razorpayifsc.presentation.callbacks.NetworkStateManager
 
 
@@ -26,14 +26,17 @@ import com.example.razorpayifsc.presentation.callbacks.NetworkStateManager
 class BankDetailsFragment : Fragment(), View.OnClickListener {
 
     private lateinit var binding: FragmentBankBinding
-    private val viewModel: BankdetailsViewModel by viewModels()
+    var viewModel: BankdetailsViewModel? = null
     lateinit var networkStateManager: NetworkStateManager
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        viewModel = (viewModel ?: ViewModelProvider(this)[BankdetailsViewModel::class.java])
+
         binding = FragmentBankBinding.inflate(inflater, container, false)
         viewListener()
         return binding.root
@@ -47,7 +50,7 @@ class BankDetailsFragment : Fragment(), View.OnClickListener {
 
     private fun initLiveDataObservers() {
         binding.progressBar.hide()
-        viewModel.bankDetailsLiveEvent.observe(
+        viewModel?.bankDetailsLiveEvent?.observe(
             viewLifecycleOwner,
             SafeObserver(this::handleBankDetailsResponse)
         )
@@ -123,7 +126,7 @@ class BankDetailsFragment : Fragment(), View.OnClickListener {
 
     override fun onClick(view: View?) {
         when (view?.id) {
-            binding.submitBtn.id -> viewModel.fetchBankDetails(binding.ifscCodeEditText.text.toString())
+            binding.submitBtn.id -> viewModel?.fetchBankDetails(binding.ifscCodeEditText.text.toString())
         }
     }
 }

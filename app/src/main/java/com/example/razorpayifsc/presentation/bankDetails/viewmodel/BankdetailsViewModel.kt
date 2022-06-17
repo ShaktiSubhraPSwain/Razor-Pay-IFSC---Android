@@ -1,4 +1,4 @@
-package com.example.razorpayifsc.presentation.bankDetails
+package com.example.razorpayifsc.presentation.bankDetails.viewmodel
 
 import android.os.Bundle
 import androidx.lifecycle.ViewModel
@@ -17,7 +17,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class BankdetailsViewModel @Inject constructor(
+open class BankdetailsViewModel @Inject constructor(
     private var bankDetailUseCase: BankDetailUseCase,
     private var bankAnalytics: BankAnalytics
 ) : ViewModel() {
@@ -46,9 +46,7 @@ class BankdetailsViewModel @Inject constructor(
                     is NetworkResponse.UnknownError -> handleFailure(it.error ?: Throwable())
                 }
             }
-        } catch (e: Exception) {
-            _bankDetailsLiveEvent.value = Resource(throwable = e, status = State.ErrorState(e))
-        }
+        } catch (e: Exception) { _bankDetailsLiveEvent.value = Resource(throwable = e, status = State.ErrorState(e)) }
     }
 
     private fun handleSuccess(data: BankDetailsResponseEntity)  {

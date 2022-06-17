@@ -3,7 +3,6 @@ package com.example.razorpayifsc.presentation
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.example.razorpayifsc.MainCoroutineRule
-import com.example.razorpayifsc.data.entity.BankDetailsResponseEntity
 import com.example.razorpayifsc.data.mapper.BankDetailsMapper.toDomain
 import com.example.razorpayifsc.data.repo.analytics.BankAnalytics
 import com.example.razorpayifsc.domain.bank_details.model.BankDetailsEntity
@@ -13,14 +12,16 @@ import com.example.razorpayifsc.domain.common.NetworkResponse
 import com.example.razorpayifsc.domain.usecases.MOCK_IFSC_CODE
 import com.example.razorpayifsc.domain.usecases.bankDetailResponse
 import com.example.razorpayifsc.domain.usecases.hashMap
-import com.example.razorpayifsc.presentation.bankDetails.BankdetailsViewModel
+import com.example.razorpayifsc.presentation.bankDetails.viewmodel.BankdetailsViewModel
 import com.example.razorpayifsc.presentation.base.Resource
 import com.google.gson.Gson
+import com.nhaarman.mockitokotlin2.anyOrNull
 import com.nhaarman.mockitokotlin2.mock
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.CoreMatchers
 import org.hamcrest.MatcherAssert
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.ArgumentCaptor
@@ -33,8 +34,10 @@ import org.mockito.stubbing.Answer
 
 import org.mockito.Mockito.`when`
 import java.io.IOException
-import java.lang.Exception
-import kotlin.concurrent.thread
+import android.os.Bundle
+
+
+
 
 class BankDetailsViewModelUnitTest {
 
@@ -76,6 +79,14 @@ class BankDetailsViewModelUnitTest {
     private val loadingBankDetailsResponse: Resource<BankDetailsEntity> =
         Resource(State.LoadingState)
 
+    @Mock
+    lateinit var extras: Bundle
+
+    @Before
+    fun setUp() {
+        Mockito.doNothing().`when`(extras).putString(anyOrNull(), anyOrNull())
+        `when`(bankAnalytics.logEvent(anyOrNull(), anyOrNull())).thenAnswer({})
+    }
     @ExperimentalCoroutinesApi
     @Test
     fun fetchBankDetail_Success() {
