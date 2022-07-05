@@ -24,7 +24,7 @@
 
 
 <div align="center">
-    <img src="https://raw.githubusercontent.com/ShaktiSubhraPSwain/Razor-Pay-IFSC---Android/master/screenshots/razorpay_ifsc.png" width = "400"/> 
+    <img src="https://raw.githubusercontent.com/ShaktiSubhraPSwain/Razor-Pay-IFSC---Android/main/screenshots/razorpay_ifsc.png" width = "400"/> 
 </div>
   
 
