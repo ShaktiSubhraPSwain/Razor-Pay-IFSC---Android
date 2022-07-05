@@ -1,14 +1,19 @@
 <resources>
     <string name="app_name">Razor pay IFSC</string>
     <string name="submit">submit</string>
-    <string name="ifscCode">IFSC Code</string>
+    <string name="ifsc_code">IFSC Code</string>
     <string name="bank">Bank</string>
     <string name="branch">Branch</string>
     <string name="address">Address</string>
     <string name="city">City</string>
     <string name="district">District</string>
     <string name="state">State</string>
-    <string name="bankCode">Bank Code</string>
+    <string name="bank_code">Bank Code</string>
     <string name="contact">Contact</string>
-    <string name="notAvailable">Not available</string>
+    <string name="not_available">Not available</string>
+    <string name="invalid_ifsc_code">Invalid IFSC code</string>
+    <string name="ok">OK</string>
+    <string name="no_internet_connection">No internet connection</string>
+    <string name="back_online">Back Online</string>
+    <string name="ex_ifsc_code">Ex: ICIC0000361</string>
 </resources>

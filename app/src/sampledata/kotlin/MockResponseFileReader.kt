@@ -1,4 +1,4 @@
-package com.example.razorpayifsc.utils
+package com.example.razorpayifsc
 
 import java.io.InputStreamReader
 
@@ -6,7 +6,7 @@ class MockResponseFileReader (path: String) {
     val content: String
 
     init {
-        val reader = InputStreamReader(this.javaClass.classLoader!!.getResourceAsStream(path))
+        val reader = InputStreamReader(this.javaClass.classLoader?.getResourceAsStream(path))
         content = reader.readText()
         reader.close()
     }

@@ -6,6 +6,6 @@ import com.google.firebase.analytics.FirebaseAnalytics
 
 class BankFirebaseAnalytics(var firebaseAnalytics: FirebaseAnalytics): BankAnalytics {
     override fun logEvent(name: String, bundle: Bundle) {
-        firebaseAnalytics.logEvent("sign_up", bundle)
+        firebaseAnalytics.logEvent(name, bundle)
     }
 }

@@ -1,6 +1,5 @@
 package com.example.razorpayifsc.domain.common
 
-import com.google.android.gms.common.api.ApiException
 import okhttp3.Request
 import okhttp3.ResponseBody
 import okio.Timeout
@@ -9,7 +8,6 @@ import retrofit2.Callback
 import retrofit2.Converter
 import retrofit2.Response
 import java.io.IOException
-import okhttp3.ResponseBody.Companion.toResponseBody
 
 internal class NetworkResponseCall<S : Any, E : Any>(
     private val delegate: Call<S>,

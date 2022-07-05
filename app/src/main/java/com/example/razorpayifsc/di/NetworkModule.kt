@@ -26,7 +26,12 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class NetworkModule {
 
-    var BASE_URL = "https://raw.githubusercontent.com/Asutosh11/CoroutinesRetrofitWithUnitTest/master/"
+    private val BASE_URL = "https://ifsc.razorpay.com/"
+    private val READ_TIMEOUT = 30
+    private val WRITE_TIMEOUT = 30
+    private val CONNECTION_TIMEOUT = 10
+    private val CACHE_SIZE_BYTES = 10 * 1024 * 1024L // 10 MB
+
     @Singleton
     @Provides
     fun provideApplication(@ApplicationContext app: Context): App {
@@ -41,11 +46,6 @@ class NetworkModule {
             .addCallAdapterFactory(NetworkResponseAdapterFactory())
             .build()
     }
-
-    private val READ_TIMEOUT = 30
-    private val WRITE_TIMEOUT = 30
-    private val CONNECTION_TIMEOUT = 10
-    private val CACHE_SIZE_BYTES = 10 * 1024 * 1024L // 10 MB
 
     @Provides
     @Singleton

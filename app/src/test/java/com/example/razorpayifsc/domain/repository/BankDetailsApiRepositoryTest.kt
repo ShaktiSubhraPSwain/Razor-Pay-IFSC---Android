@@ -1,11 +1,11 @@
 package com.example.razorpayifsc.domain.repository
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.example.razorpayifsc.MockResponseFileReader
 import com.example.razorpayifsc.data.repo.BankDetailApi
 import com.example.razorpayifsc.data.repo.BankDetailDataRepository
 import com.example.razorpayifsc.domain.common.NetworkResponse
 import com.example.razorpayifsc.domain.common.NetworkResponseAdapterFactory
-import com.example.razorpayifsc.utils.MockResponseFileReader
 
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser
@@ -33,14 +33,14 @@ class BankDetailsApiRepositoryTest {
     @Before
     fun init() {
         server.start(8000)
-        val BASE_URL = server.url("/")
+        val baseUrl = server.url("/")
         val okHttpClient = OkHttpClient
             .Builder()
             .build()
         val apiService = Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
             .addCallAdapterFactory(NetworkResponseAdapterFactory())
-            .baseUrl(BASE_URL).client(okHttpClient).build().create(BankDetailApi::class.java)
+            .baseUrl(baseUrl).client(okHttpClient).build().create(BankDetailApi::class.java)
         repository = BankDetailDataRepository(apiService)
     }
 

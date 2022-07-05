@@ -9,5 +9,14 @@
         android:id="@+id/bankDetailsFragment"
         android:name="com.example.razorpayifsc.presentation.bankDetails.ui.BankDetailsFragment"
         android:label="fragment_bank"
-        tools:layout="@layout/fragment_bank" />
+        tools:layout="@layout/fragment_bank" >
+        <action
+            android:id="@+id/action_bankDetailsFragment_to_sharedFragment"
+            app:destination="@id/sharedFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/sharedFragment"
+        android:name="com.example.razorpayifsc.utils.learning.datasharing.SharedFragment"
+        android:label="fragment_shared"
+        tools:layout="@layout/fragment_shared" />
 </navigation>

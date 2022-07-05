@@ -48,6 +48,16 @@ android {
     testOptions {
         unitTests.returnDefaultValues = true
     }
+
+    // Maintained common mock data for UI & Unit testing
+    sourceSets {
+        test.java.srcDirs += 'src/sampledata/kotlin'
+        test.resources.srcDirs += 'src/sampledata/resources'
+        androidTest.assets.srcDirs += files("$projectDir/schemas".toString())
+        androidTest.java.srcDirs += 'src/sampledata/kotlin'
+        androidTest.resources.srcDirs += 'src/sampledata/resources'
+    }
+
 }
 
 dependencies {
@@ -70,6 +80,7 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2'
 
     implementation 'com.google.dagger:hilt-android:2.38.1'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt 'com.google.dagger:hilt-android-compiler:2.38.1'
 
     implementation("com.squareup.retrofit2:retrofit:2.9.0") {
@@ -101,7 +112,7 @@ dependencies {
 
 
     testImplementation "androidx.test:core:1.4.0"
-    testImplementation "org.mockito:mockito-core:4.6.1"
+//    testImplementation "org.mockito:mockito-core:4.6.1"
     testImplementation "androidx.arch.core:core-testing:2.1.0"
     testImplementation "org.mockito:mockito-inline:4.4.0"
 
@@ -129,5 +140,8 @@ dependencies {
     androidTestImplementation 'com.google.dagger:hilt-android-testing:2.42'
     // ...with Kotlin.
     kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.38.1'
+
+    // Lottie animation
+    implementation 'com.airbnb.android:lottie:5.2.0'
 
 }

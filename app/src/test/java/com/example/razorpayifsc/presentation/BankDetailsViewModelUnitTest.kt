@@ -3,16 +3,12 @@ package com.example.razorpayifsc.presentation
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.example.razorpayifsc.MainCoroutineRule
-import com.example.razorpayifsc.data.mapper.BankDetailsMapper.toDomain
 import com.example.razorpayifsc.data.repo.analytics.BankAnalytics
 import com.example.razorpayifsc.domain.bank_details.model.BankDetailsEntity
 import com.example.razorpayifsc.domain.bank_details.repository.BankDetailRepository
 import com.example.razorpayifsc.domain.bank_details.usecase.BankDetailUseCase
 import com.example.razorpayifsc.domain.common.NetworkResponse
-import com.example.razorpayifsc.domain.usecases.MOCK_IFSC_CODE
-import com.example.razorpayifsc.domain.usecases.bankDetailResponse
-import com.example.razorpayifsc.domain.usecases.hashMap
-import com.example.razorpayifsc.presentation.bankDetails.viewmodel.BankdetailsViewModel
+import com.example.razorpayifsc.presentation.bankDetails.viewmodel.BankDetailsViewModel
 import com.example.razorpayifsc.presentation.base.Resource
 import com.google.gson.Gson
 import com.nhaarman.mockitokotlin2.anyOrNull
@@ -35,14 +31,15 @@ import org.mockito.stubbing.Answer
 import org.mockito.Mockito.`when`
 import java.io.IOException
 import android.os.Bundle
-
-
-
+import com.example.razorpayifsc.MOCK_IFSC_CODE
+import com.example.razorpayifsc.bankDetailResponse
+import com.example.razorpayifsc.hashMap
+import org.mockito.junit.MockitoRule
 
 class BankDetailsViewModelUnitTest {
 
     @get:Rule
-    val mockitoRule = MockitoJUnit.rule()
+    val mockitoRule: MockitoRule = MockitoJUnit.rule()
 
     @get:Rule
     val testRule = InstantTaskExecutorRule()
@@ -66,7 +63,7 @@ class BankDetailsViewModelUnitTest {
         BankDetailUseCase(bankDetailRepository)
     }
 
-    private val bankDetailViewModel by lazy { BankdetailsViewModel(bankDetailsUseCase, bankAnalytics) }
+    private val bankDetailViewModel by lazy { BankDetailsViewModel(bankDetailsUseCase, bankAnalytics) }
 
     private val bankDetailsMapper = bankDetailResponse().toDomain()
     private val successBankDetailsResponse: Resource<BankDetailsEntity> =
@@ -85,7 +82,7 @@ class BankDetailsViewModelUnitTest {
     @Before
     fun setUp() {
         Mockito.doNothing().`when`(extras).putString(anyOrNull(), anyOrNull())
-        `when`(bankAnalytics.logEvent(anyOrNull(), anyOrNull())).thenAnswer({})
+        `when`(bankAnalytics.logEvent(anyOrNull(), anyOrNull())).thenAnswer {}
     }
     @ExperimentalCoroutinesApi
     @Test

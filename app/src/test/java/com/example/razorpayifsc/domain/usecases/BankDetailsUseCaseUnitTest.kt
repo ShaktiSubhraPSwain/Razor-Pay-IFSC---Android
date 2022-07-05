@@ -1,9 +1,12 @@
 package com.example.razorpayifsc.domain.usecases
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.example.razorpayifsc.MOCK_IFSC_CODE
+import com.example.razorpayifsc.bankDetailResponse
 import com.example.razorpayifsc.domain.bank_details.repository.BankDetailRepository
 import com.example.razorpayifsc.domain.bank_details.usecase.BankDetailUseCase
 import com.example.razorpayifsc.domain.common.NetworkResponse
+import com.example.razorpayifsc.hashMap
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.reset
 import com.nhaarman.mockitokotlin2.whenever
@@ -33,7 +36,6 @@ class BankDetailsUseCaseTest {
     }
 
 
-
     @ExperimentalCoroutinesApi
     @Test
     fun testLoginUseCase_success() {
@@ -61,7 +63,8 @@ class BankDetailsUseCaseTest {
             val map = BankDetailUseCase.Params(hashMap)
 
             whenever(bankDetailRepository.getBankDetailFromIFSC(MOCK_IFSC_CODE)).thenReturn(
-                NetworkResponse.NetworkError(IOException("Not found")))
+                NetworkResponse.NetworkError(IOException("Not found"))
+            )
 
             bankDetailsUseCase.run(map).let {
                 when (it) {
