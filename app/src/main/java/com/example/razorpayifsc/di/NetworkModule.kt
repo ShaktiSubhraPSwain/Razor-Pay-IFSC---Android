@@ -7,6 +7,7 @@ import com.example.razorpayifsc.data.repo.BankDetailDataRepository
 import com.example.razorpayifsc.domain.bank_details.repository.BankDetailRepository
 import com.example.razorpayifsc.domain.common.NetworkResponseAdapterFactory
 import com.example.razorpayifsc.presentation.App
+import com.example.razorpayifsc.utils.APIConst
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
@@ -26,7 +27,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class NetworkModule {
 
-    private val BASE_URL = "https://ifsc.razorpay.com/"
     private val READ_TIMEOUT = 30
     private val WRITE_TIMEOUT = 30
     private val CONNECTION_TIMEOUT = 10
@@ -41,7 +41,7 @@ class NetworkModule {
     @Provides
     @Singleton
     fun provideRetrofit(client: OkHttpClient): Retrofit {
-        return Retrofit.Builder().baseUrl(BASE_URL).client(client)
+        return Retrofit.Builder().baseUrl(APIConst.BASE_URL).client(client)
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
             .addCallAdapterFactory(NetworkResponseAdapterFactory())
             .build()
