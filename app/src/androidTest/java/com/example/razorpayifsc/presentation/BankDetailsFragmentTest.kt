@@ -114,7 +114,6 @@ class BankDetailsFragmentTest {
         onView(withId(R.id.btnSubmit)).check(matches(isEnabled()))
         onView(withId(R.id.btnSubmit)).perform(click())
         onView(withId(R.id.tvBankName)).check(matches(withText("ICICI Bank")))
-        Thread.sleep(1000L)
     }
 
 }

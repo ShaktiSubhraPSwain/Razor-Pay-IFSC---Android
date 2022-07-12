@@ -2,7 +2,6 @@ package com.example.razorpayifsc.presentation
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.example.razorpayifsc.MainCoroutineRule
 import com.example.razorpayifsc.data.repo.analytics.BankAnalytics
 import com.example.razorpayifsc.domain.bank_details.model.BankDetailsEntity
 import com.example.razorpayifsc.domain.bank_details.repository.BankDetailRepository
@@ -11,29 +10,19 @@ import com.example.razorpayifsc.domain.common.NetworkResponse
 import com.example.razorpayifsc.presentation.bankDetails.viewmodel.BankDetailsViewModel
 import com.example.razorpayifsc.presentation.base.Resource
 import com.google.gson.Gson
-import com.nhaarman.mockitokotlin2.anyOrNull
-import com.nhaarman.mockitokotlin2.mock
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.CoreMatchers
-import org.hamcrest.MatcherAssert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.ArgumentCaptor
-import org.mockito.Captor
-import org.mockito.Mock
-import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnit
 
-import org.mockito.stubbing.Answer
-
-import org.mockito.Mockito.`when`
 import java.io.IOException
-import android.os.Bundle
-import com.example.razorpayifsc.MOCK_IFSC_CODE
-import com.example.razorpayifsc.bankDetailResponse
-import com.example.razorpayifsc.hashMap
+import com.example.razorpayifsc.*
+import io.mockk.*
+import kotlinx.coroutines.test.*
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.core.Is.`is`
 import org.mockito.junit.MockitoRule
 
 class BankDetailsViewModelUnitTest {
@@ -48,107 +37,83 @@ class BankDetailsViewModelUnitTest {
     @get:Rule
     val coroutineScope = MainCoroutineRule()
 
-    @Mock
-    lateinit var bankDetailsObserver: Observer<Resource<BankDetailsEntity>>
+    private lateinit var bankAnalytics: BankAnalytics
 
-    @Mock
-    lateinit var bankAnalytics: BankAnalytics
+    private var bankDetailRepository: BankDetailRepository = mockk()
 
-    @Captor
-    private val argumentCaptor: ArgumentCaptor<Resource<BankDetailsEntity>>? = null
-
-    private var bankDetailRepository = mock<BankDetailRepository>()
-
-    private val bankDetailsUseCase by lazy {
-        BankDetailUseCase(bankDetailRepository)
+    private val bankDetailViewModel by lazy {
+        BankDetailsViewModel(
+            BankDetailUseCase(bankDetailRepository),
+            bankAnalytics
+        )
     }
 
-    private val bankDetailViewModel by lazy { BankDetailsViewModel(bankDetailsUseCase, bankAnalytics) }
-
-    private val bankDetailsMapper = bankDetailResponse().toDomain()
+    private val bankDetails = bankDetailResponse()
     private val successBankDetailsResponse: Resource<BankDetailsEntity> =
-        Resource(status = State.DataState(bankDetailsMapper), data = bankDetailsMapper)
+        Resource(status = State.DataState(bankDetails), data = bankDetails)
+
     private val errorBankDetailsResponse: Resource<Throwable> =
         Resource(
-            throwable = IOException("Not found"),
-            status = State.ErrorState(IOException("Not found"))
+            throwable = IOException(NOT_FOUND),
+            status = State.ErrorState(IOException(NOT_FOUND))
         )
     private val loadingBankDetailsResponse: Resource<BankDetailsEntity> =
         Resource(State.LoadingState)
 
-    @Mock
-    lateinit var extras: Bundle
 
     @Before
     fun setUp() {
-        Mockito.doNothing().`when`(extras).putString(anyOrNull(), anyOrNull())
-        `when`(bankAnalytics.logEvent(anyOrNull(), anyOrNull())).thenAnswer {}
-    }
-    @ExperimentalCoroutinesApi
-    @Test
-    fun fetchBankDetail_Success() {
-        val map = BankDetailUseCase.Params(hashMap)
-
-        coroutineScope.runBlockingTest {
-            `when`(bankDetailsUseCase.run(map)).thenAnswer(Answer {
-                Thread.sleep(1000)
-                return@Answer NetworkResponse.Success(bankDetailResponse())
-            })
-        }
-
-        bankDetailViewModel.bankDetailsLiveEvent.observeForever(bankDetailsObserver)
-        bankDetailViewModel.fetchBankDetails(MOCK_IFSC_CODE)
-
-        argumentCaptor?.apply {
-            Mockito.verify(bankDetailsObserver, Mockito.times(1)).onChanged(capture())
-            MatcherAssert.assertThat(
-                Gson().toJson(value),
-                CoreMatchers.`is`(Gson().toJson(loadingBankDetailsResponse))
-            )
-        }
-
-        Thread.sleep(1000)
-
-        argumentCaptor?.apply {
-            Mockito.verify(bankDetailsObserver, Mockito.times(2)).onChanged(capture())
-            MatcherAssert.assertThat(
-                Gson().toJson(value),
-                CoreMatchers.`is`(Gson().toJson(successBankDetailsResponse))
-            )
-        }
+        mockBundleOf()
+        bankAnalytics = mockBankAnalytics()
     }
 
     @ExperimentalCoroutinesApi
     @Test
-    fun fetchBankDetail_Error() {
-        val map = BankDetailUseCase.Params(hashMap)
+    fun `Given DataResult Error returned from useCase, should result loading & error`() =
+        runTest {
+            val observer = mockk<Observer<Resource<BankDetailsEntity>>>()
 
-        coroutineScope.runBlockingTest {
-            `when`(bankDetailsUseCase.run(map)).thenAnswer(Answer {
-                Thread.sleep(1000)
-                return@Answer NetworkResponse.NetworkError(IOException("Not found"))
-            })
-        }
+            coEvery { bankDetailRepository.getBankDetailFromIFSC(MOCK_IFSC_CODE) } coAnswers {
+                NetworkResponse.NetworkError(IOException(NOT_FOUND))
+            }
 
-        bankDetailViewModel.bankDetailsLiveEvent.observeForever(bankDetailsObserver)
-        bankDetailViewModel.fetchBankDetails(MOCK_IFSC_CODE)
+            //start observing
+            bankDetailViewModel.bankDetailsLiveEvent.observeForever(observer)
 
-        argumentCaptor?.apply {
-            Mockito.verify(bankDetailsObserver, Mockito.times(1)).onChanged(capture())
-            MatcherAssert.assertThat(
-                Gson().toJson(value),
-                CoreMatchers.`is`(Gson().toJson(loadingBankDetailsResponse))
-            )
-        }
 
-        Thread.sleep(1000)
+            val list = arrayListOf<Resource<BankDetailsEntity>>()
 
-        argumentCaptor?.apply {
-            Mockito.verify(bankDetailsObserver, Mockito.times(2)).onChanged(capture())
-            MatcherAssert.assertThat(
-                Gson().toJson(value),
+            observer.captureObserverChanges(list)
+
+            bankDetailViewModel.fetchBankDetails(MOCK_IFSC_CODE)
+
+            assertThat(list.first(), `is`(loadingBankDetailsResponse))
+            assertThat(
+                Gson().toJson(list.last()),
                 CoreMatchers.`is`(Gson().toJson(errorBankDetailsResponse))
             )
         }
-    }
+
+    @ExperimentalCoroutinesApi
+    @Test
+    fun `Given DataResult Success returned from useCase, should result loading & success`() =
+        runTest {
+            val observer = mockk<Observer<Resource<BankDetailsEntity>>>()
+
+            //start observing
+            bankDetailViewModel.bankDetailsLiveEvent.observeForever(observer)
+
+            //create list to store values
+            val list = arrayListOf<Resource<BankDetailsEntity>>()
+            observer.captureObserverChanges(list)
+
+
+            coEvery { bankDetailRepository.getBankDetailFromIFSC(MOCK_IFSC_CODE) } coAnswers {
+                NetworkResponse.Success(bankDetailResponse())
+            }
+
+            bankDetailViewModel.fetchBankDetails(MOCK_IFSC_CODE)
+            assertThat(list.first(), `is`(loadingBankDetailsResponse))
+            assertThat(list.last(), `is`(successBankDetailsResponse))
+        }
 }

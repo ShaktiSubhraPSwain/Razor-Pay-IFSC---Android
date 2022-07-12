@@ -1,9 +1,9 @@
 package com.example.razorpayifsc.presentation.bankDetails.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.razorpayifsc.data.entity.BankDetailsResponseEntity
 import com.example.razorpayifsc.data.repo.analytics.BankAnalytics
 import com.example.razorpayifsc.domain.bank_details.model.BankDetailsEntity
 import com.example.razorpayifsc.domain.bank_details.usecase.BankDetailUseCase
@@ -25,7 +25,7 @@ open class BankDetailsViewModel @Inject constructor(
     }
 
     private val _bankDetailsLiveEvent = MutableLiveData<Resource<BankDetailsEntity>>()
-    val bankDetailsLiveEvent: MutableLiveData<Resource<BankDetailsEntity>> = _bankDetailsLiveEvent
+    val bankDetailsLiveEvent: LiveData<Resource<BankDetailsEntity>> = _bankDetailsLiveEvent
 
     fun fetchBankDetails(ifscCode: String) {
         fetchBankDetailsFromRemote(ifscCode)
@@ -53,12 +53,10 @@ open class BankDetailsViewModel @Inject constructor(
      * Handled success response of ifsc code request
      * dispatched the success response to update UI
      */
-    private fun handleSuccess(data: BankDetailsResponseEntity) {
+    private fun handleSuccess(data: BankDetailsEntity) {
         bankAnalytics.logStringEvent(TAG, ifscSuccess, data.ifsc)
-        // Mapped BankDetailsResponseEntity to BankDetailsEntity
-        val bankMapper = data.toDomain()
         _bankDetailsLiveEvent.value =
-            Resource(data = bankMapper, status = State.DataState(bankMapper))
+            Resource(data = data, status = State.DataState(data))
     }
 
     /**

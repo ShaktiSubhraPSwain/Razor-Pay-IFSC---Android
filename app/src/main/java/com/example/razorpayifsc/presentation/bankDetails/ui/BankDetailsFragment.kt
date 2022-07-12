@@ -56,7 +56,7 @@ class BankDetailsFragment : Fragment(), View.OnClickListener {
     private fun initNetworkState() {
         networkStateManager = NetworkStateManager.getInstance()
         networkStateManager?.getConnectivityStatus()?.observe(
-            this,
+            viewLifecycleOwner,
             SafeObserver(this::handleNetworkState)
         )
     }
@@ -108,7 +108,7 @@ class BankDetailsFragment : Fragment(), View.OnClickListener {
         binding.tableBankDetails.show()
         response?.let {
             // setting data to view
-            binding.apply {
+            with(binding) {
                 tvBankName.text = it.bank
                 tvBranchName.text = it.branch
                 tvBankAddress.text = it.address
@@ -117,8 +117,7 @@ class BankDetailsFragment : Fragment(), View.OnClickListener {
                 tvBankState.text = it.state
                 tvBankCode.text = it.bankCode
                 // If contact no is null or empty set not available
-                tvContactNo.text =
-                    if (it.contact.isNullOrEmpty()) getString(R.string.not_available) else it.contact
+                tvContactNo.text = it.contact ?: getString(R.string.not_available)
             }
         }
     }
@@ -130,12 +129,9 @@ class BankDetailsFragment : Fragment(), View.OnClickListener {
         binding.progressBar.hide()
         /// Hide the bank
         binding.tableBankDetails.hide()
-        activity?.let {
+        activity?.let { activity ->
             response.throwable.let { error ->
-                activity?.let { activity ->
-                    ErrorDialogFragment().show(activity.supportFragmentManager, error?.message)
-
-                }
+                ErrorDialogFragment().show(activity.supportFragmentManager, error?.message)
             }
         }
     }
