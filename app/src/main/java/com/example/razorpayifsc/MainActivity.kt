@@ -13,7 +13,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import android.util.TypedValue
 import com.example.razorpayifsc.databinding.ActivityMainBinding
 
-
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
@@ -35,8 +34,11 @@ class MainActivity : AppCompatActivity() {
      * on any update on connectivity getConnectivityStatus will notified
      */
     private fun initNetworkState() {
-        NetworkStateManager.getInstance()?.getConnectivityStatus()?.observe(this,
-            SafeObserver(this::handleNetworkState)
+        NetworkStateManager.getInstance()?.getConnectivityStatus()?.observe(
+            this,
+            SafeObserver(
+                this::handleNetworkState
+            )
         )
     }
 
@@ -51,15 +53,15 @@ class MainActivity : AppCompatActivity() {
         snackbar = if (status) {
             val outValue = TypedValue()
             this.theme.resolveAttribute(R.attr.colorPrimary, outValue, true)
-
-            binding.root.showSnackbar(
-                R.string.back_online,  outValue.data)
+            binding.root.showSnackbar(R.string.back_online, outValue.data)
         } else {
             // Show the Snackbar indefinitely on no internet
             binding.root.showSnackbar(
-                R.string.no_internet_connection, ContextCompat.getColor(
+                R.string.no_internet_connection,
+                ContextCompat.getColor(
                     applicationContext,
-                    R.color.red),
+                    R.color.red
+                ),
                 Snackbar.LENGTH_INDEFINITE
             )
         }

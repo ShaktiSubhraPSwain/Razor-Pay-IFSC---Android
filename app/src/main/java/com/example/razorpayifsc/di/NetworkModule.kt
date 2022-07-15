@@ -1,6 +1,5 @@
 package com.example.razorpayifsc.di
 
-
 import android.content.Context
 import com.example.razorpayifsc.data.repo.BankDetailApi
 import com.example.razorpayifsc.data.repo.BankDetailDataRepository
@@ -64,17 +63,15 @@ class NetworkModule {
         }.build()
     }
 
-
     @Provides
     @Singleton
     fun provideHeaderInterceptor(): Interceptor {
         return Interceptor {
             val requestBuilder = it.request().newBuilder()
-            //hear you can add all headers you want by calling 'requestBuilder.addHeader(name ,  value)'
+            // hear you can add all headers you want by calling 'requestBuilder.addHeader(name ,  value)'
             it.proceed(requestBuilder.build())
         }
     }
-
 
     @Provides
     @Singleton
@@ -82,7 +79,6 @@ class NetworkModule {
         val httpCacheDirectory = File(context.cacheDir.absolutePath, "HttpCache")
         return Cache(httpCacheDirectory, CACHE_SIZE_BYTES)
     }
-
 
     @Provides
     @Singleton

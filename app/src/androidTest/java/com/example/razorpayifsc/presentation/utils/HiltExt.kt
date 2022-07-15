@@ -7,18 +7,18 @@ import androidx.annotation.StyleRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
 import androidx.navigation.NavHostController
-import androidx.test.core.app.ApplicationProvider
-import com.example.razorpayifsc.HiltTestActivity
-import com.example.razorpayifsc.R
 import androidx.navigation.Navigation
 import androidx.test.core.app.ActivityScenario
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.core.internal.deps.dagger.internal.Preconditions
+import com.example.razorpayifsc.HiltTestActivity
+import com.example.razorpayifsc.R
 
-inline fun <reified T : Fragment>  launchFragmentInHiltContainer(
+inline fun <reified T : Fragment> launchFragmentInHiltContainer(
     fragmentArgs: Bundle? = null,
     @StyleRes themeResId: Int = R.style.FragmentScenarioEmptyFragmentActivityTheme,
-    fragmentFactory: FragmentFactory ? = null,
-    navHostController: NavHostController ?= null,
+    fragmentFactory: FragmentFactory? = null,
+    navHostController: NavHostController? = null,
     crossinline action: Fragment.() -> Unit = {},
     crossinline initializeViewModel: Fragment.() -> Unit = {}
 ) {
@@ -54,6 +54,4 @@ inline fun <reified T : Fragment>  launchFragmentInHiltContainer(
 
         fragment.action()
     }
-
-
 }

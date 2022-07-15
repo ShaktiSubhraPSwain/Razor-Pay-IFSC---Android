@@ -12,10 +12,10 @@ import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.junit.*
+import org.junit.* // ktlint-disable no-wildcard-imports
 import java.io.IOException
 
-class BankDetailsUseCaseTest {
+class BankDetailsUseCaseUnitTest {
 
     @Rule
     @JvmField
@@ -63,5 +63,4 @@ class BankDetailsUseCaseTest {
             }
         }
     }
-
 }

@@ -1,19 +1,18 @@
 package com.example.razorpayifsc.domain.repository
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.example.razorpayifsc.*
+import com.example.razorpayifsc.* // ktlint-disable no-wildcard-imports
 import com.example.razorpayifsc.data.repo.BankDetailApi
 import com.example.razorpayifsc.data.repo.BankDetailDataRepository
 import com.example.razorpayifsc.domain.common.network.NetworkResponse
 import com.example.razorpayifsc.domain.common.network.NetworkResponseAdapterFactory
-
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
-import org.junit.*
+import org.junit.* // ktlint-disable no-wildcard-imports
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import retrofit2.Retrofit
@@ -57,7 +56,6 @@ class BankDetailsApiRepositoryTest {
 
         Assert.assertNotNull(resultResponse)
         Assert.assertTrue(resultResponse.equals(expectedResponse))
-
     }
 
     @Test

@@ -7,7 +7,7 @@ import com.example.razorpayifsc.data.repo.analytics.BankAnalytics
 import com.example.razorpayifsc.domain.bank_details.model.BankDetailsEntity
 import com.example.razorpayifsc.utils.APIConst
 import com.google.gson.Gson
-import io.mockk.*
+import io.mockk.* // ktlint-disable no-wildcard-imports
 
 const val BANK_DETAIL_JSON = "{\n" +
         "  \"MICR\": \"380229012\",\n" +

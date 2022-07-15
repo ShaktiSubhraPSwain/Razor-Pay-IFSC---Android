@@ -34,5 +34,4 @@ class NetworkStateManager {
     fun getConnectivityStatus(): LiveData<Boolean> {
         return networkStatusMLD
     }
-
 }

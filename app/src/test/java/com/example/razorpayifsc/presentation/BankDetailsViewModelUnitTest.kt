@@ -16,11 +16,12 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.junit.MockitoJUnit
-
 import java.io.IOException
+/* ktlint-disable no-wildcard-imports */
 import com.example.razorpayifsc.*
 import io.mockk.*
 import kotlinx.coroutines.test.*
+/* ktlint-enable no-wildcard-imports */
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.Is.`is`
 import org.mockito.junit.MockitoRule
@@ -60,7 +61,6 @@ class BankDetailsViewModelUnitTest {
     private val loadingBankDetailsResponse: Resource<BankDetailsEntity> =
         Resource(State.LoadingState)
 
-
     @Before
     fun setUp() {
         mockBundleOf()
@@ -77,9 +77,8 @@ class BankDetailsViewModelUnitTest {
                 NetworkResponse.NetworkError(IOException(NOT_FOUND))
             }
 
-            //start observing
+            // start observing
             bankDetailViewModel.bankDetailsLiveEvent.observeForever(observer)
-
 
             val list = arrayListOf<Resource<BankDetailsEntity>>()
 
@@ -100,18 +99,16 @@ class BankDetailsViewModelUnitTest {
         runTest {
             val observer = mockk<Observer<Resource<BankDetailsEntity>>>()
 
-            //start observing
+            // start observing
             bankDetailViewModel.bankDetailsLiveEvent.observeForever(observer)
 
-            //create list to store values
+            // create list to store values
             val list = arrayListOf<Resource<BankDetailsEntity>>()
             observer.captureObserverChanges(list)
-
 
             coEvery { bankDetailRepository.getBankDetailFromIFSC(MOCK_IFSC_CODE) } coAnswers {
                 NetworkResponse.Success(bankDetailResponse())
             }
-
             bankDetailViewModel.fetchBankDetails(MOCK_IFSC_CODE)
             assertThat(list.first(), `is`(loadingBankDetailsResponse))
             assertThat(list.last(), `is`(successBankDetailsResponse))

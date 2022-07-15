@@ -11,7 +11,6 @@ import com.example.razorpayifsc.presentation.base.Resource
 import dagger.hilt.android.AndroidEntryPoint
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.core.text.toSpannable
 import androidx.lifecycle.ViewModelProvider
 import com.example.razorpayifsc.R
 import com.example.razorpayifsc.databinding.FragmentBankBinding
@@ -53,7 +52,6 @@ class BankDetailsFragment : Fragment(), View.OnClickListener {
         initNetworkState()
     }
 
-
     private fun initNetworkState() {
         networkStateManager = NetworkStateManager.getInstance()
         networkStateManager?.getConnectivityStatus()?.observe(
@@ -62,7 +60,7 @@ class BankDetailsFragment : Fragment(), View.OnClickListener {
         )
     }
 
-    /// Update button enable status on network connectivity status
+    // Update button enable status on network connectivity status
     private fun handleNetworkState(status: Boolean) {
         binding.btnSubmit.isEnabled =
             viewModel?.buttonEnableStatus(status, binding.etIfscCode.text).value()
@@ -75,14 +73,16 @@ class BankDetailsFragment : Fragment(), View.OnClickListener {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 binding.btnSubmit.isEnabled =
                     viewModel?.buttonEnableStatus(
-                        networkStateManager?.isInternetAvailable, s).value()
+                        networkStateManager?.isInternetAvailable, s
+                    ).value()
             }
 
             override fun beforeTextChanged(
-                s: CharSequence, start: Int, count: Int,
+                s: CharSequence,
+                start: Int,
+                count: Int,
                 after: Int
-            ) {
-            }
+            ) {}
 
             override fun afterTextChanged(s: Editable) {
                 binding.tilIfscCode.isEndIconVisible = s.isNotEmpty()
@@ -128,7 +128,7 @@ class BankDetailsFragment : Fragment(), View.OnClickListener {
      */
     private fun handleBankDetailsFailure(response: Resource<BankDetailsEntity>) {
         binding.progressBar.hide()
-        /// Hide the bank
+        // Hide the bank
         binding.tableBankDetails.hide()
         activity?.let { activity ->
             response.throwable.let { error ->

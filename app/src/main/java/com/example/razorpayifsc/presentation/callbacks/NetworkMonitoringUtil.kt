@@ -42,5 +42,4 @@ class NetworkMonitoringUtil(context: Context) : ConnectivityManager.NetworkCallb
         Log.d(TAG, "registerNetworkCallBack() called")
         connectivityManager.registerNetworkCallback(networkRequest, this)
     }
-
 }

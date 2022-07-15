@@ -7,7 +7,7 @@ import com.example.razorpayifsc.domain.common.network.NetworkResponse
 import com.example.razorpayifsc.utils.APIConst
 import javax.inject.Inject
 
-class BankDetailUseCase @Inject constructor(private val bankDetailRepository: BankDetailRepository):
+class BankDetailUseCase @Inject constructor(private val bankDetailRepository: BankDetailRepository) :
     BaseCoroutinesUseCase<BankDetailsEntity, BankDetailUseCase.Params>() {
 
     data class Params(val hashMap: HashMap<String, String>)

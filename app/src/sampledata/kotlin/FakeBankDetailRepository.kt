@@ -5,8 +5,7 @@ import com.example.razorpayifsc.domain.bank_details.repository.BankDetailReposit
 import com.example.razorpayifsc.domain.common.network.NetworkResponse
 
 class FakeBankDetailRepository : BankDetailRepository {
-    override suspend fun getBankDetailFromIFSC(ifscCode: String):
-            NetworkResponse<BankDetailsEntity, Error> {
+    override suspend fun getBankDetailFromIFSC(ifscCode: String): NetworkResponse<BankDetailsEntity, Error> {
         return NetworkResponse.Success(bankDetailResponse())
     }
 }
