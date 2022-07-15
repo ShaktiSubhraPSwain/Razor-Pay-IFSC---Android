@@ -2,7 +2,7 @@ package com.example.razorpayifsc.data.repo
 
 import com.example.razorpayifsc.domain.bank_details.model.BankDetailsEntity
 import com.example.razorpayifsc.domain.bank_details.repository.BankDetailRepository
-import com.example.razorpayifsc.domain.common.NetworkResponse
+import com.example.razorpayifsc.domain.common.network.NetworkResponse
 import javax.inject.Inject
 
 class BankDetailDataRepository @Inject constructor(

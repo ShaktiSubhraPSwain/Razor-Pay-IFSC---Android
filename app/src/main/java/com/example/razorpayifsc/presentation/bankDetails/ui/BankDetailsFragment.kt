@@ -11,6 +11,7 @@ import com.example.razorpayifsc.presentation.base.Resource
 import dagger.hilt.android.AndroidEntryPoint
 import android.text.Editable
 import android.text.TextWatcher
+import androidx.core.text.toSpannable
 import androidx.lifecycle.ViewModelProvider
 import com.example.razorpayifsc.R
 import com.example.razorpayifsc.databinding.FragmentBankBinding
@@ -64,17 +65,17 @@ class BankDetailsFragment : Fragment(), View.OnClickListener {
     /// Update button enable status on network connectivity status
     private fun handleNetworkState(status: Boolean) {
         binding.btnSubmit.isEnabled =
-            status && binding.etIfscCode.text?.isNotEmpty() ?: false
+            viewModel?.buttonEnableStatus(status, binding.etIfscCode.text).value()
     }
 
     private fun viewListener() {
         binding.btnSubmit.setOnClickListener(this)
 
-        // Here
         binding.etIfscCode.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 binding.btnSubmit.isEnabled =
-                    (networkStateManager?.isInternetAvailable ?: false) && s.isNotEmpty()
+                    viewModel?.buttonEnableStatus(
+                        networkStateManager?.isInternetAvailable, s).value()
             }
 
             override fun beforeTextChanged(

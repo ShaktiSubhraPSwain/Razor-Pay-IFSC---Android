@@ -4,8 +4,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.razorpayifsc.MockResponseFileReader
 import com.example.razorpayifsc.data.repo.BankDetailApi
 import com.example.razorpayifsc.data.repo.BankDetailDataRepository
-import com.example.razorpayifsc.domain.common.NetworkResponse
-import com.example.razorpayifsc.domain.common.NetworkResponseAdapterFactory
+import com.example.razorpayifsc.domain.common.network.NetworkResponse
+import com.example.razorpayifsc.domain.common.network.NetworkResponseAdapterFactory
 
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser

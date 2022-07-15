@@ -6,7 +6,7 @@ import com.example.razorpayifsc.data.repo.analytics.BankAnalytics
 import com.example.razorpayifsc.domain.bank_details.model.BankDetailsEntity
 import com.example.razorpayifsc.domain.bank_details.repository.BankDetailRepository
 import com.example.razorpayifsc.domain.bank_details.usecase.BankDetailUseCase
-import com.example.razorpayifsc.domain.common.NetworkResponse
+import com.example.razorpayifsc.domain.common.network.NetworkResponse
 import com.example.razorpayifsc.presentation.bankDetails.viewmodel.BankDetailsViewModel
 import com.example.razorpayifsc.presentation.base.Resource
 import com.google.gson.Gson

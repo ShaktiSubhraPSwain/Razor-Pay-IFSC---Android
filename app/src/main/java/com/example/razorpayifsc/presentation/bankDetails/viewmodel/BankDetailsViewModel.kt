@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.razorpayifsc.data.repo.analytics.BankAnalytics
 import com.example.razorpayifsc.domain.bank_details.model.BankDetailsEntity
 import com.example.razorpayifsc.domain.bank_details.usecase.BankDetailUseCase
-import com.example.razorpayifsc.domain.common.NetworkResponse
+import com.example.razorpayifsc.domain.common.network.NetworkResponse
 import com.example.razorpayifsc.presentation.State
 import com.example.razorpayifsc.presentation.base.Resource
 import com.example.razorpayifsc.utils.*
@@ -27,19 +27,31 @@ open class BankDetailsViewModel @Inject constructor(
     private val _bankDetailsLiveEvent = MutableLiveData<Resource<BankDetailsEntity>>()
     val bankDetailsLiveEvent: LiveData<Resource<BankDetailsEntity>> = _bankDetailsLiveEvent
 
+    /**
+     * Enable & disable the button on the basis of networkStatus & test value
+     * Returns true if internet is on & test is not empty
+     */
+    fun buttonEnableStatus(networkStatus: Boolean?, test: CharSequence?) =
+        networkStatus.value() && test.value().isNotEmpty()
+
+    /**
+     * Fetched the bank details from IFSC code from server
+     */
     fun fetchBankDetails(ifscCode: String) {
         fetchBankDetailsFromRemote(ifscCode)
     }
 
+    /**
+     * Get the bank details from server & set the value to live data to observe
+     */
     private fun fetchBankDetailsFromRemote(ifsc: String) {
         _bankDetailsLiveEvent.value = Resource(State.LoadingState)
         val map = hashMapOf(
-            APIConst.ifscCode to ifsc
-        )
+            APIConst.ifscCode to ifsc)
         val params = BankDetailUseCase.Params(map)
 
         // Invoke request to get bank details
-        bankDetailUseCase.invoke(viewModelScope, params) {
+        bankDetailUseCase(viewModelScope, params) {
             when (it) {
                 is NetworkResponse.Success -> handleSuccess(it.body)
                 is NetworkResponse.ApiError -> handleFailure(it.body)
@@ -51,7 +63,7 @@ open class BankDetailsViewModel @Inject constructor(
 
     /**
      * Handled success response of ifsc code request
-     * dispatched the success response to update UI
+     * dispatched the success response to live data to observe
      */
     private fun handleSuccess(data: BankDetailsEntity) {
         bankAnalytics.logStringEvent(TAG, ifscSuccess, data.ifsc)
@@ -61,7 +73,7 @@ open class BankDetailsViewModel @Inject constructor(
 
     /**
      * Handled failure response of ifsc code request
-     * dispatched the error response to UI
+     * dispatched the error response to live data to observe
      */
     private fun handleFailure(throwable: Throwable) {
         bankAnalytics.logStringEvent(TAG, ifscFailed, throwable.message)

@@ -6,7 +6,7 @@ import com.example.razorpayifsc.NOT_FOUND
 import com.example.razorpayifsc.bankDetailResponse
 import com.example.razorpayifsc.domain.bank_details.repository.BankDetailRepository
 import com.example.razorpayifsc.domain.bank_details.usecase.BankDetailUseCase
-import com.example.razorpayifsc.domain.common.NetworkResponse
+import com.example.razorpayifsc.domain.common.network.NetworkResponse
 import com.example.razorpayifsc.hashMap
 import io.mockk.coEvery
 import io.mockk.mockk

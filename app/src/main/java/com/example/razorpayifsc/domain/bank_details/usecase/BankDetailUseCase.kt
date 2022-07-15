@@ -3,7 +3,7 @@ package com.example.razorpayifsc.domain.bank_details.usecase
 import com.example.razorpayifsc.domain.bank_details.model.BankDetailsEntity
 import com.example.razorpayifsc.domain.bank_details.repository.BankDetailRepository
 import com.example.razorpayifsc.domain.common.BaseCoroutinesUseCase
-import com.example.razorpayifsc.domain.common.NetworkResponse
+import com.example.razorpayifsc.domain.common.network.NetworkResponse
 import com.example.razorpayifsc.utils.APIConst
 import javax.inject.Inject
 

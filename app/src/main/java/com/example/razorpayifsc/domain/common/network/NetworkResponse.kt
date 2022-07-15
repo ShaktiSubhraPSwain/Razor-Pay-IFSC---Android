@@ -1,4 +1,4 @@
-package com.example.razorpayifsc.domain.common
+package com.example.razorpayifsc.domain.common.network
 
 import java.io.IOException
 

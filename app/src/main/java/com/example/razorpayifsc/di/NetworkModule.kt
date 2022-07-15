@@ -5,7 +5,7 @@ import android.content.Context
 import com.example.razorpayifsc.data.repo.BankDetailApi
 import com.example.razorpayifsc.data.repo.BankDetailDataRepository
 import com.example.razorpayifsc.domain.bank_details.repository.BankDetailRepository
-import com.example.razorpayifsc.domain.common.NetworkResponseAdapterFactory
+import com.example.razorpayifsc.domain.common.network.NetworkResponseAdapterFactory
 import com.example.razorpayifsc.presentation.App
 import com.example.razorpayifsc.utils.APIConst
 import com.google.gson.GsonBuilder

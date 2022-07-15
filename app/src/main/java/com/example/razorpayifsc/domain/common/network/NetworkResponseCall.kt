@@ -1,4 +1,4 @@
-package com.example.razorpayifsc.domain.common
+package com.example.razorpayifsc.domain.common.network
 
 import okhttp3.Request
 import okhttp3.ResponseBody

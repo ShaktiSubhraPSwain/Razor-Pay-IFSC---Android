@@ -1,4 +1,4 @@
-package com.example.razorpayifsc.domain.common
+package com.example.razorpayifsc.domain.common.network
 
 import retrofit2.Call
 import retrofit2.CallAdapter
