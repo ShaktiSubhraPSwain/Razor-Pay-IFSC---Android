@@ -81,12 +81,12 @@ fun mockBankAnalytics(): BankAnalytics {
  * Captured the datum of observer and returned the list of data
  */
 inline fun <reified T : Any> Observer<T>.captureObserverChanges(list: ArrayList<T>): List<T> {
-    //create slot
+    // create slot
     val slot = slot<T>()
 
-    //capture value on every call
+    // capture value on every call
     every { onChanged(capture(slot)) } answers {
-        //store captured value
+        // store captured value
         list.add(slot.captured)
     }
 

@@ -2,7 +2,7 @@ package com.example.razorpayifsc
 
 import java.io.InputStreamReader
 
-class MockResponseFileReader (path: String) {
+class MockResponseFileReader(path: String) {
     val content: String
 
     init {

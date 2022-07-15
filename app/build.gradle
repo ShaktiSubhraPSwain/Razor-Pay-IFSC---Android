@@ -8,7 +8,8 @@ plugins {
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
 }
-apply from: "ktlint.gradle"
+
+apply plugin: Ktlint.ktlintGradle
 
 android {
     compileSdk Release.compileSdkVersion

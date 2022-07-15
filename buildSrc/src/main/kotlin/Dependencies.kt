@@ -130,6 +130,9 @@ object Version {
     // MockK
     const val mockKVersion = "1.12.4"
 
+    // ktlint
+    const val ktlintVersion = "10.3.0"
+
 }
 
 object Dependencies {
@@ -244,4 +247,9 @@ object LottieAnimation {
 object MockK {
     const val mockK = "io.mockk:mockk:${Version.mockKVersion}"
     const val mockKAndroid = "io.mockk:mockk-android:${Version.mockKVersion}"
+}
+
+object Ktlint {
+    const val ktlintGradle: String = "org.jlleitschuh.gradle.ktlint"
+    const val ktlintVersion = "org.jlleitschuh.gradle:ktlint-gradle:${Version.ktlintVersion}"
 }

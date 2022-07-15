@@ -1,6 +1,5 @@
 package com.example.razorpayifsc.presentation.dialogs
 
-import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
@@ -14,7 +13,7 @@ class ErrorDialogFragment : DialogFragment() {
         return activity?.let {
             // Use the Builder class for convenient dialog construction
             val builder = AlertDialog.Builder(it)
-            val inflater = requireActivity().layoutInflater;
+            val inflater = requireActivity().layoutInflater
             val view = ErrorDialogBinding.inflate(inflater, null, false)
             view.error.playAnimation()
             builder.setView(view.root)

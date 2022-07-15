@@ -14,10 +14,15 @@ buildscript {
         classpath Config.navigationGradle
         classpath Config.googleGradle
         classpath Config.firebaseCrashlyticsGradle
+        classpath Ktlint.ktlintVersion
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
+}
+
+plugins {
+    id "org.jlleitschuh.gradle.ktlint" version "10.3.0"
 }
 
 task clean(type: Delete) {
