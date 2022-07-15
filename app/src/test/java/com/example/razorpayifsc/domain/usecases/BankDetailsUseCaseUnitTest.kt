@@ -29,7 +29,7 @@ class BankDetailsUseCaseTest {
 
     @ExperimentalCoroutinesApi
     @Test
-    fun testLoginUseCase_success() = runTest {
+    fun `Given getBankDetailFromIFSC() returned success response, when IFSC code is correct`() = runTest {
         val map = BankDetailUseCase.Params(hashMap)
 
         coEvery { bankDetailRepository.getBankDetailFromIFSC(MOCK_IFSC_CODE) } coAnswers {
@@ -48,7 +48,7 @@ class BankDetailsUseCaseTest {
 
     @ExperimentalCoroutinesApi
     @Test
-    fun testLoginUseCase_failure() = runTest {
+    fun `Given getBankDetailFromIFSC() returned IOException(NOT_FOUND), when IFSC code is wrong`() = runTest {
         val map = BankDetailUseCase.Params(hashMap)
         coEvery { bankDetailRepository.getBankDetailFromIFSC(MOCK_IFSC_CODE) } coAnswers {
             NetworkResponse.NetworkError(IOException(NOT_FOUND))

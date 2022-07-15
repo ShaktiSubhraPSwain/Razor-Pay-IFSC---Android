@@ -1,7 +1,7 @@
 package com.example.razorpayifsc.domain.repository
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.example.razorpayifsc.MockResponseFileReader
+import com.example.razorpayifsc.*
 import com.example.razorpayifsc.data.repo.BankDetailApi
 import com.example.razorpayifsc.data.repo.BankDetailDataRepository
 import com.example.razorpayifsc.domain.common.network.NetworkResponse
@@ -47,8 +47,8 @@ class BankDetailsApiRepositoryTest {
     @Test
     fun test_Success() {
         mockedResponse = MockResponseFileReader("bankDetailsApi/success.json").content
-        server.enqueue(MockResponse().setResponseCode(200).setBody(mockedResponse))
-        val response = runBlocking { repository.getBankDetailFromIFSC("ICIC0000361") }
+        server.enqueue(MockResponse().setResponseCode(SUCCESS_CODE).setBody(mockedResponse))
+        val response = runBlocking { repository.getBankDetailFromIFSC(MOCK_IFSC_CODE) }
         val json = gson.toJson((response as NetworkResponse.Success).body)
 
         val resultResponse = JsonParser.parseString(json)
@@ -62,8 +62,8 @@ class BankDetailsApiRepositoryTest {
 
     @Test
     fun test_Failure() {
-        server.enqueue(MockResponse().setResponseCode(400).setBody("Client Error"))
-        val response = runBlocking { repository.getBankDetailFromIFSC("ICIC0000361") }
+        server.enqueue(MockResponse().setResponseCode(BAD_REQUEST_CODE).setBody("Client Error"))
+        val response = runBlocking { repository.getBankDetailFromIFSC(MOCK_IFSC_CODE) }
         val json = gson.toJson((response as NetworkResponse.NetworkError).error)
         val resultResponse = JsonParser.parseString(json)
         val expectedResponse =
