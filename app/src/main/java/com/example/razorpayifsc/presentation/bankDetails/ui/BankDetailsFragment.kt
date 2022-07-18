@@ -118,7 +118,7 @@ class BankDetailsFragment : Fragment(), View.OnClickListener {
                 tvBankState.text = it.state
                 tvBankCode.text = it.bankCode
                 // If contact no is null or empty set not available
-                tvContactNo.text = it.contact ?: getString(R.string.not_available)
+                tvContactNo.text = it.contact.value(getString(R.string.not_available))
             }
         }
     }
