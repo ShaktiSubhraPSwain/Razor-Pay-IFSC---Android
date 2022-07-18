@@ -11,7 +11,7 @@ import com.example.razorpayifsc.presentation.base.Resource
 import dagger.hilt.android.AndroidEntryPoint
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.example.razorpayifsc.R
 import com.example.razorpayifsc.databinding.FragmentBankBinding
 import com.example.razorpayifsc.domain.bank_details.model.BankDetailsEntity
@@ -24,7 +24,7 @@ import com.example.razorpayifsc.utils.*
 class BankDetailsFragment : Fragment(), View.OnClickListener {
 
     private lateinit var binding: FragmentBankBinding
-    var viewModel: BankDetailsViewModel? = null
+    val viewModel by viewModels<BankDetailsViewModel>()
     var networkStateManager: NetworkStateManager? = null
 
     override fun onCreateView(
@@ -38,14 +38,13 @@ class BankDetailsFragment : Fragment(), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = (viewModel ?: ViewModelProvider(this)[BankDetailsViewModel::class.java])
         binding.progressBar.hide()
         viewListener()
         initLiveDataObservers()
     }
 
     private fun initLiveDataObservers() {
-        viewModel?.bankDetailsLiveEvent?.observe(
+        viewModel.bankDetailsLiveEvent.observe(
             viewLifecycleOwner,
             SafeObserver(this::handleBankDetailsResponse)
         )
@@ -63,7 +62,7 @@ class BankDetailsFragment : Fragment(), View.OnClickListener {
     // Update button enable status on network connectivity status
     private fun handleNetworkState(status: Boolean) {
         binding.btnSubmit.isEnabled =
-            viewModel?.buttonEnableStatus(status, binding.etIfscCode.text).value()
+            viewModel.buttonEnableStatus(status, binding.etIfscCode.text).value()
     }
 
     private fun viewListener() {
@@ -72,7 +71,7 @@ class BankDetailsFragment : Fragment(), View.OnClickListener {
         binding.etIfscCode.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 binding.btnSubmit.isEnabled =
-                    viewModel?.buttonEnableStatus(
+                    viewModel.buttonEnableStatus(
                         networkStateManager?.isInternetAvailable, s
                     ).value()
             }
@@ -82,7 +81,8 @@ class BankDetailsFragment : Fragment(), View.OnClickListener {
                 start: Int,
                 count: Int,
                 after: Int
-            ) {}
+            ) {
+            }
 
             override fun afterTextChanged(s: Editable) {
                 binding.tilIfscCode.isEndIconVisible = s.isNotEmpty()
@@ -128,12 +128,10 @@ class BankDetailsFragment : Fragment(), View.OnClickListener {
      */
     private fun handleBankDetailsFailure(response: Resource<BankDetailsEntity>) {
         binding.progressBar.hide()
-        // Hide the bank
+        // Hide the bank details
         binding.tableBankDetails.hide()
-        activity?.let { activity ->
-            response.throwable.let { error ->
-                ErrorDialogFragment().show(activity.supportFragmentManager, error?.message)
-            }
+        response.throwable?.let { error ->
+            ErrorDialogFragment().show(requireActivity().supportFragmentManager, error.message)
         }
     }
 
@@ -141,7 +139,7 @@ class BankDetailsFragment : Fragment(), View.OnClickListener {
         when (view?.id) {
             binding.btnSubmit.id -> {
                 hideKeyboard()
-                viewModel?.fetchBankDetails(binding.etIfscCode.toText())
+                viewModel.fetchBankDetails(binding.etIfscCode.toText())
             }
         }
     }

@@ -9,11 +9,7 @@ import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.example.razorpayifsc.data.repo.analytics.BankAnalytics
-import com.example.razorpayifsc.domain.FakeBankDetailRepository
-import com.example.razorpayifsc.domain.bank_details.usecase.BankDetailUseCase
 import com.example.razorpayifsc.presentation.bankDetails.ui.BankDetailsFragment
-import com.example.razorpayifsc.presentation.bankDetails.viewmodel.BankDetailsViewModel
 import com.example.razorpayifsc.presentation.callbacks.NetworkStateManager
 import com.example.razorpayifsc.presentation.utils.launchFragmentInHiltContainer
 import com.example.razorpayifsc.R
@@ -40,17 +36,7 @@ class BankDetailsFragmentTest {
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
 
-    private var bankDetailRepository = FakeBankDetailRepository()
-
-    private var bankAnalytics: BankAnalytics = mock(BankAnalytics::class.java)
-
     private var networkStateManager = NetworkStateManager.getInstance()
-
-    private val bankDetailsUseCase by lazy {
-        BankDetailUseCase(bankDetailRepository)
-    }
-
-    private lateinit var mockViewModel: BankDetailsViewModel
 
     @Before
     fun setUp() {
@@ -58,19 +44,13 @@ class BankDetailsFragmentTest {
 
         networkStateManager?.setConnectivityStatus(true)
 
-        mockViewModel = BankDetailsViewModel(bankDetailsUseCase, bankAnalytics)
-
         navController = mock(NavController::class.java)
         navController.setViewModelStore(ViewModelStore())
         navController.setGraph(R.navigation.navigation)
 
         navController.setGraph(R.navigation.navigation)
 
-        launchFragmentInHiltContainer<BankDetailsFragment>(
-            initializeViewModel = {
-                (this as BankDetailsFragment).viewModel = mockViewModel
-            }
-        )
+        launchFragmentInHiltContainer<BankDetailsFragment>()
     }
 
     @Test

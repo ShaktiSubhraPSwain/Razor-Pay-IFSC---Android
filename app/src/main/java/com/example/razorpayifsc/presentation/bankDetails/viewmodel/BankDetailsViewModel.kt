@@ -12,6 +12,7 @@ import com.example.razorpayifsc.presentation.State
 import com.example.razorpayifsc.presentation.base.Resource
 import com.example.razorpayifsc.utils.* // ktlint-disable no-wildcard-imports
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -46,16 +47,13 @@ open class BankDetailsViewModel @Inject constructor(
      */
     private fun fetchBankDetailsFromRemote(ifsc: String) {
         _bankDetailsLiveEvent.value = Resource(State.LoadingState)
-        val map = hashMapOf(APIConst.ifscCode to ifsc)
-        val params = BankDetailUseCase.Params(map)
 
-        // Invoke request to get bank details
-        bankDetailUseCase(viewModelScope, params) {
-            when (it) {
-                is NetworkResponse.Success -> handleSuccess(it.body)
-                is NetworkResponse.ApiError -> handleFailure(it.body)
-                is NetworkResponse.NetworkError -> handleFailure(it.error)
-                is NetworkResponse.UnknownError -> handleFailure(it.error ?: Throwable())
+        viewModelScope.launch {
+            when (val result = bankDetailUseCase(ifsc)) {
+                is NetworkResponse.Success -> handleSuccess(result.body)
+                is NetworkResponse.ApiError -> handleFailure(result.body)
+                is NetworkResponse.NetworkError -> handleFailure(result.error)
+                is NetworkResponse.UnknownError -> handleFailure(result.error)
             }
         }
     }
@@ -74,9 +72,11 @@ open class BankDetailsViewModel @Inject constructor(
      * Handled failure response of ifsc code request
      * dispatched the error response to live data to observe
      */
-    private fun handleFailure(throwable: Throwable) {
-        bankAnalytics.logStringEvent(TAG, ifscFailed, throwable.message)
-        _bankDetailsLiveEvent.value =
-            Resource(throwable = throwable, status = State.ErrorState(throwable))
+    private fun handleFailure(throwable: Throwable?) {
+        throwable?.let {
+            bankAnalytics.logStringEvent(TAG, ifscFailed, it.message)
+            _bankDetailsLiveEvent.value =
+                Resource(throwable = it, status = State.ErrorState(it))
+        }
     }
 }

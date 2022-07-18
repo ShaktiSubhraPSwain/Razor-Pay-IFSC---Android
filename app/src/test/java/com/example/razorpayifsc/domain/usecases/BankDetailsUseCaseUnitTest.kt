@@ -30,13 +30,11 @@ class BankDetailsUseCaseUnitTest {
     @ExperimentalCoroutinesApi
     @Test
     fun `Given getBankDetailFromIFSC() returned success response, when IFSC code is correct`() = runTest {
-        val map = BankDetailUseCase.Params(hashMap)
-
         coEvery { bankDetailRepository.getBankDetailFromIFSC(MOCK_IFSC_CODE) } coAnswers {
             NetworkResponse.Success(bankDetailResponse())
         }
 
-        bankDetailsUseCase.run(map).let {
+        bankDetailsUseCase(MOCK_IFSC_CODE).let {
             when (it) {
                 is NetworkResponse.Success -> Assert.assertEquals(
                     it.body.ifsc, MOCK_IFSC_CODE
@@ -49,12 +47,11 @@ class BankDetailsUseCaseUnitTest {
     @ExperimentalCoroutinesApi
     @Test
     fun `Given getBankDetailFromIFSC() returned IOException(NOT_FOUND), when IFSC code is wrong`() = runTest {
-        val map = BankDetailUseCase.Params(hashMap)
         coEvery { bankDetailRepository.getBankDetailFromIFSC(MOCK_IFSC_CODE) } coAnswers {
             NetworkResponse.NetworkError(IOException(NOT_FOUND))
         }
 
-        bankDetailsUseCase.run(map).let {
+        bankDetailsUseCase(MOCK_IFSC_CODE).let {
             when (it) {
                 is NetworkResponse.NetworkError -> Assert.assertEquals(
                     it.error.message, NOT_FOUND

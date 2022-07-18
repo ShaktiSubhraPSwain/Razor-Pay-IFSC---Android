@@ -20,14 +20,16 @@ inline fun <reified T : Fragment> launchFragmentInHiltContainer(
     fragmentFactory: FragmentFactory? = null,
     navHostController: NavHostController? = null,
     crossinline action: Fragment.() -> Unit = {},
-    crossinline initializeViewModel: Fragment.() -> Unit = {}
 ) {
     val startActivityIntent = Intent.makeMainActivity(
         ComponentName(
             ApplicationProvider.getApplicationContext(),
             HiltTestActivity::class.java
         )
-    ).putExtra("androidx.fragment.app.testing.FragmentScenario.EmptyFragmentActivity.THEME_EXTRAS_BUNDLE_KEY", themeResId)
+    ).putExtra(
+        "androidx.fragment.app.testing.FragmentScenario.EmptyFragmentActivity.THEME_EXTRAS_BUNDLE_KEY",
+        themeResId
+    )
 
     ActivityScenario.launch<HiltTestActivity>(startActivityIntent).onActivity { activity ->
         fragmentFactory?.let {
@@ -37,7 +39,6 @@ inline fun <reified T : Fragment> launchFragmentInHiltContainer(
             Preconditions.checkNotNull(T::class.java.classLoader),
             T::class.java.name
         )
-        fragment.initializeViewModel()
 
         fragment.arguments = fragmentArgs
         fragment.viewLifecycleOwnerLiveData.observeForever { viewLifecycleOwner ->
