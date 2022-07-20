@@ -11,7 +11,6 @@ class BankDetailUseCase @Inject constructor(
     private val bankDetailRepository: BankDetailRepository) {
 
     suspend operator fun invoke(ifscCode: String) = withContext(Dispatchers.IO) {
-        println("BankDetailUseCase.invoke")
         bankDetailRepository.getBankDetailFromIFSC(ifscCode)
     }
 }
