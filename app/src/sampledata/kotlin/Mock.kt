@@ -5,7 +5,6 @@ import androidx.lifecycle.Observer
 import com.example.razorpayifsc.data.entity.BankDetailsResponseEntity
 import com.example.razorpayifsc.data.repo.analytics.BankAnalytics
 import com.example.razorpayifsc.domain.bank_details.model.BankDetailsEntity
-import com.example.razorpayifsc.utils.APIConst
 import com.google.gson.Gson
 import io.mockk.* // ktlint-disable no-wildcard-imports
 
@@ -32,10 +31,6 @@ const val BANK_DETAIL_JSON = "{\n" +
 val gson = Gson()
 fun bankDetailResponse(): BankDetailsEntity =
     gson.fromJson(BANK_DETAIL_JSON, BankDetailsResponseEntity::class.java).toDomain()
-
-val hashMap = hashMapOf(
-    APIConst.ifscCode to "ICIC0000361"
-)
 
 const val MOCK_IFSC_CODE = "ICIC0000361"
 const val NOT_FOUND = "Not found"

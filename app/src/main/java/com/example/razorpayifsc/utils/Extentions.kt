@@ -35,7 +35,7 @@ fun EditText.toText(): String {
     return text.toString()
 }
 
-/// Snackbar Extension
+// Snackbar Extension
 fun View.showSnackbar(message: Int, color: Int, duration: Int): Snackbar {
     return Snackbar.make(
         this,

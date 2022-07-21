@@ -5,9 +5,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class BankDetailUseCase @Inject constructor(
-    private val bankDetailRepository: BankDetailRepository) {
-
+class BankDetailUseCase @Inject constructor(private val bankDetailRepository: BankDetailRepository) {
     suspend operator fun invoke(ifscCode: String) = withContext(Dispatchers.IO) {
         bankDetailRepository.getBankDetailFromIFSC(ifscCode)
     }
