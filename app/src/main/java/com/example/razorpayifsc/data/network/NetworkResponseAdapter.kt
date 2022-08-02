@@ -1,4 +1,4 @@
-package com.example.razorpayifsc.domain.common.network
+package com.example.razorpayifsc.data.network
 
 import okhttp3.ResponseBody
 import retrofit2.Call

@@ -8,10 +8,8 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 
-fun Fragment.hideKeyboard() {
-    view?.let {
-        activity?.hideKeyboard(it)
-    }
+fun Fragment.hideKeyboard() = view?.let {
+    requireActivity().hideKeyboard(it)
 }
 
 fun Context.hideKeyboard(view: View) {
@@ -31,9 +29,7 @@ fun View.show() {
     }
 }
 
-fun EditText.toText(): String {
-    return text.toString()
-}
+fun EditText.toText(): String = text.toString()
 
 // Snackbar Extension
 fun View.showSnackbar(message: Int, color: Int, duration: Int): Snackbar {

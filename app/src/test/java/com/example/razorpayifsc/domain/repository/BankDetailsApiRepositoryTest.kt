@@ -3,9 +3,9 @@ package com.example.razorpayifsc.domain.repository
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.razorpayifsc.* // ktlint-disable no-wildcard-imports
 import com.example.razorpayifsc.data.repo.BankDetailApi
-import com.example.razorpayifsc.data.repo.BankDetailDataRepository
-import com.example.razorpayifsc.domain.common.network.NetworkResponse
-import com.example.razorpayifsc.domain.common.network.NetworkResponseAdapterFactory
+import com.example.razorpayifsc.data.repo.BankDetailRemoteRepositoryImpl
+import com.example.razorpayifsc.data.network.NetworkResponse
+import com.example.razorpayifsc.data.network.NetworkResponseAdapterFactory
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser
 import kotlinx.coroutines.runBlocking
@@ -25,7 +25,7 @@ class BankDetailsApiRepositoryTest {
     val instantExecutorRule = InstantTaskExecutorRule()
 
     private val server = MockWebServer()
-    private lateinit var repository: BankDetailDataRepository
+    private lateinit var repository: BankDetailRemoteRepositoryImpl
     private lateinit var mockedResponse: String
     private val gson = GsonBuilder().setLenient().create()
 
@@ -40,7 +40,7 @@ class BankDetailsApiRepositoryTest {
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
             .addCallAdapterFactory(NetworkResponseAdapterFactory())
             .baseUrl(baseUrl).client(okHttpClient).build().create(BankDetailApi::class.java)
-        repository = BankDetailDataRepository(apiService)
+        repository = BankDetailRemoteRepositoryImpl(apiService)
     }
 
     @Test

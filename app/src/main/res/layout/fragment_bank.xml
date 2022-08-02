@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/_16dp"
-    tools:context=".presentation.bankDetails.ui.BankDetailsFragment">
+    tools:context=".presentation.bank_details.ui.BankDetailsFragment">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilIfscCode"

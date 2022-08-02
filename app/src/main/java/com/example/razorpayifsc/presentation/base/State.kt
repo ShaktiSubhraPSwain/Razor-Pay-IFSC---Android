@@ -1,4 +1,4 @@
-package com.example.razorpayifsc.presentation
+package com.example.razorpayifsc.presentation.base
 
 sealed class State<out T> {
     object LoadingState : State<Nothing>()

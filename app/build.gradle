@@ -21,7 +21,7 @@ android {
         versionCode Release.versionCode
         versionName Release.versionName
 
-        testInstrumentationRunner "com.example.razorpayifsc.TestAppJUnitRunner"
+        testInstrumentationRunner "com.example.razorpayifsc.test.TestAppJUnitRunner"
     }
 
     buildTypes {

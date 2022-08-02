@@ -1,9 +1,8 @@
 package com.example.razorpayifsc.data.entity
 
-import com.example.razorpayifsc.domain.bank_details.model.BankDetailsEntity
 import com.google.gson.annotations.SerializedName
 
-data class BankDetailsResponseEntity(
+data class BankDetailsApiEntity(
     @SerializedName("BANK")
     val bank: String = "",
     @SerializedName("IFSC")
@@ -24,21 +23,5 @@ data class BankDetailsResponseEntity(
     val rtgs: Boolean = false,
     @SerializedName("BANKCODE")
     val bankCode: String = "",
-) {
-    /**
-     * Mapper - BankDetailsResponseEntity to BankDetailsEntity
-     */
-    fun toDomain(): BankDetailsEntity {
-        return BankDetailsEntity(
-            bank = bank,
-            ifsc = ifsc,
-            branch = branch,
-            address = address,
-            contact = contact,
-            city = city,
-            district = district,
-            state = state,
-            bankCode = bankCode,
-        )
-    }
-}
+)
+

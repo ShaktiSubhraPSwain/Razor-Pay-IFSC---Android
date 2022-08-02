@@ -1,4 +1,4 @@
-package com.example.razorpayifsc.data.repo.analytics
+package com.example.razorpayifsc.domain.analytics
 
 import android.os.Bundle
 

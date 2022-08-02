@@ -2,12 +2,12 @@ package com.example.razorpayifsc.presentation
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.example.razorpayifsc.data.repo.analytics.BankAnalytics
+import com.example.razorpayifsc.domain.analytics.BankAnalytics
 import com.example.razorpayifsc.domain.bank_details.model.BankDetailsEntity
 import com.example.razorpayifsc.domain.bank_details.repository.BankDetailRepository
 import com.example.razorpayifsc.domain.bank_details.usecase.BankDetailUseCase
-import com.example.razorpayifsc.domain.common.network.NetworkResponse
-import com.example.razorpayifsc.presentation.bankDetails.viewmodel.BankDetailsViewModel
+import com.example.razorpayifsc.data.network.NetworkResponse
+import com.example.razorpayifsc.presentation.bank_details.viewmodel.BankDetailsViewModel
 import com.example.razorpayifsc.presentation.base.Resource
 import com.google.gson.Gson
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -19,6 +19,11 @@ import org.mockito.junit.MockitoJUnit
 import java.io.IOException
 /* ktlint-disable no-wildcard-imports */
 import com.example.razorpayifsc.*
+import com.example.razorpayifsc.data.mapper.toBankDetailsEntity
+import com.example.razorpayifsc.mock.buildBankDetailResponse
+import com.example.razorpayifsc.mock.mockBankAnalytics
+import com.example.razorpayifsc.mock.mockBundleOf
+import com.example.razorpayifsc.presentation.base.State
 import io.mockk.*
 import kotlinx.coroutines.test.*
 /* ktlint-enable no-wildcard-imports */
@@ -35,21 +40,25 @@ class BankDetailsViewModelUnitTest {
     val testRule = InstantTaskExecutorRule()
 
     @ExperimentalCoroutinesApi
+    private val testDispatcher = StandardTestDispatcher()
+
+    @ExperimentalCoroutinesApi
     @get:Rule
-    val coroutineScope = MainCoroutineRule()
+    val coroutineScope = MainCoroutineRule(testDispatcher)
 
     private lateinit var bankAnalytics: BankAnalytics
 
-    private var bankDetailRepository: BankDetailRepository = mockk()
+    private val bankDetailRepository: BankDetailRepository = mockk()
 
+    @ExperimentalCoroutinesApi
     private val bankDetailViewModel by lazy {
         BankDetailsViewModel(
-            BankDetailUseCase(bankDetailRepository),
+            BankDetailUseCase(bankDetailRepository, testDispatcher),
             bankAnalytics
         )
     }
 
-    private val bankDetails = bankDetailResponse()
+    private val bankDetails = buildBankDetailResponse().toBankDetailsEntity()
     private val successBankDetailsResponse: Resource<BankDetailsEntity> =
         Resource(status = State.DataState(bankDetails), data = bankDetails)
 
@@ -107,7 +116,7 @@ class BankDetailsViewModelUnitTest {
             observer.captureObserverChanges(list)
 
             coEvery { bankDetailRepository.getBankDetailFromIFSC(MOCK_IFSC_CODE) } coAnswers {
-                NetworkResponse.Success(bankDetailResponse())
+                NetworkResponse.Success(buildBankDetailResponse().toBankDetailsEntity())
             }
             bankDetailViewModel.fetchBankDetails(MOCK_IFSC_CODE)
             assertThat(list.first(), `is`(loadingBankDetailsResponse))

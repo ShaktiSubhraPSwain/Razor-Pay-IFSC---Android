@@ -1,18 +1,18 @@
 package com.example.razorpayifsc.di
 
-import com.example.razorpayifsc.data.repo.BankDetailDataRepository
+import com.example.razorpayifsc.data.repo.BankDetailRemoteRepositoryImpl
 import com.example.razorpayifsc.domain.bank_details.repository.BankDetailRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import dagger.hilt.android.components.ViewModelComponent
 
 @Module
-@InstallIn(SingletonComponent::class)
+@InstallIn(ViewModelComponent::class)
 abstract class RepositoryModule {
 
     @Binds
-    @Singleton
-    abstract fun provideBankDetailRepo(repository: BankDetailDataRepository): BankDetailRepository
+    abstract fun provideBankDetailRepo(
+        repository: BankDetailRemoteRepositoryImpl
+    ): BankDetailRepository
 }

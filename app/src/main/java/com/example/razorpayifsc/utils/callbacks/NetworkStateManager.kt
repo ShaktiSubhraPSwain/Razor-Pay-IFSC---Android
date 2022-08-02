@@ -1,4 +1,4 @@
-package com.example.razorpayifsc.presentation.callbacks
+package com.example.razorpayifsc.utils.callbacks
 
 import android.os.Looper
 import androidx.lifecycle.LiveData

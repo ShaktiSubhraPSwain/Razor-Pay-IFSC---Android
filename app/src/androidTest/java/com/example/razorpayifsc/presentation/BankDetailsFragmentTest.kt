@@ -1,16 +1,18 @@
 package com.example.razorpayifsc.presentation
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.ViewModelStore
-import androidx.navigation.NavController
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.espresso.matcher.ViewMatchers.isNotEnabled
+import androidx.test.espresso.matcher.ViewMatchers.isEnabled
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.example.razorpayifsc.presentation.bankDetails.ui.BankDetailsFragment
-import com.example.razorpayifsc.presentation.callbacks.NetworkStateManager
+import com.example.razorpayifsc.presentation.bank_details.ui.BankDetailsFragment
+import com.example.razorpayifsc.utils.callbacks.NetworkStateManager
 import com.example.razorpayifsc.presentation.utils.launchFragmentInHiltContainer
 import com.example.razorpayifsc.R
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -19,7 +21,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito.mock
 
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
@@ -31,25 +32,12 @@ class BankDetailsFragmentTest {
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    private lateinit var navController: NavController
-
-    @get:Rule
-    var instantExecutorRule = InstantTaskExecutorRule()
-
     private var networkStateManager = NetworkStateManager.getInstance()
 
     @Before
     fun setUp() {
         hitRule.inject()
-
         networkStateManager?.setConnectivityStatus(true)
-
-        navController = mock(NavController::class.java)
-        navController.setViewModelStore(ViewModelStore())
-        navController.setGraph(R.navigation.navigation)
-
-        navController.setGraph(R.navigation.navigation)
-
         launchFragmentInHiltContainer<BankDetailsFragment>()
     }
 

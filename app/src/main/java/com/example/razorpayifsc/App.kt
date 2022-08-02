@@ -1,7 +1,6 @@
-package com.example.razorpayifsc.presentation
+package com.example.razorpayifsc
 
-import com.example.razorpayifsc.BaseApplication
-import com.example.razorpayifsc.presentation.callbacks.NetworkMonitoringUtil
+import com.example.razorpayifsc.utils.callbacks.NetworkMonitoringUtil
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp

@@ -1,4 +1,4 @@
-package com.example.razorpayifsc.presentation.callbacks
+package com.example.razorpayifsc.utils.callbacks
 
 import android.content.Context
 import android.net.ConnectivityManager

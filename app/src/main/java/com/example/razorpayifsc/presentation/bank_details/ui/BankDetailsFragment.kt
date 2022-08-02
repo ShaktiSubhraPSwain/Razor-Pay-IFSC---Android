@@ -1,4 +1,4 @@
-package com.example.razorpayifsc.presentation.bankDetails.ui
+package com.example.razorpayifsc.presentation.bank_details.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,17 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.razorpayifsc.presentation.base.SafeObserver
-import com.example.razorpayifsc.presentation.State
+import com.example.razorpayifsc.presentation.base.State
 import com.example.razorpayifsc.presentation.base.Resource
 import dagger.hilt.android.AndroidEntryPoint
-import android.text.Editable
-import android.text.TextWatcher
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import com.example.razorpayifsc.R
 import com.example.razorpayifsc.databinding.FragmentBankBinding
 import com.example.razorpayifsc.domain.bank_details.model.BankDetailsEntity
-import com.example.razorpayifsc.presentation.bankDetails.viewmodel.BankDetailsViewModel
-import com.example.razorpayifsc.presentation.callbacks.NetworkStateManager
+import com.example.razorpayifsc.presentation.bank_details.viewmodel.BankDetailsViewModel
+import com.example.razorpayifsc.utils.callbacks.NetworkStateManager
 import com.example.razorpayifsc.presentation.dialogs.ErrorDialogFragment
 import com.example.razorpayifsc.utils.*
 
@@ -24,8 +23,8 @@ import com.example.razorpayifsc.utils.*
 class BankDetailsFragment : Fragment(), View.OnClickListener {
 
     private lateinit var binding: FragmentBankBinding
-    val viewModel by viewModels<BankDetailsViewModel>()
-    var networkStateManager: NetworkStateManager? = null
+    private val viewModel by viewModels<BankDetailsViewModel>()
+    private var networkStateManager: NetworkStateManager? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -67,27 +66,17 @@ class BankDetailsFragment : Fragment(), View.OnClickListener {
 
     private fun viewListener() {
         binding.btnSubmit.setOnClickListener(this)
-
-        binding.etIfscCode.addTextChangedListener(object : TextWatcher {
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+        binding.etIfscCode.addTextChangedListener(
+            afterTextChanged = { text ->
+                binding.tilIfscCode.isEndIconVisible = text?.isNotEmpty().value()
+            },
+            onTextChanged = { s, _, _, _ ->
                 binding.btnSubmit.isEnabled =
                     viewModel.buttonEnableStatus(
                         networkStateManager?.isInternetAvailable, s
                     ).value()
             }
-
-            override fun beforeTextChanged(
-                s: CharSequence,
-                start: Int,
-                count: Int,
-                after: Int
-            ) {
-            }
-
-            override fun afterTextChanged(s: Editable) {
-                binding.tilIfscCode.isEndIconVisible = s.isNotEmpty()
-            }
-        })
+        )
     }
 
     private fun handleBankDetailsResponse(response: Resource<BankDetailsEntity>) {

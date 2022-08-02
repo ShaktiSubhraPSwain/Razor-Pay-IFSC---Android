@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.razorpayifsc.presentation.base.SafeObserver
-import com.example.razorpayifsc.presentation.callbacks.NetworkStateManager
+import com.example.razorpayifsc.utils.callbacks.NetworkStateManager
 import com.example.razorpayifsc.utils.showSnackbar
 import com.example.razorpayifsc.utils.value
 import com.google.android.material.snackbar.Snackbar
