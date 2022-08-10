@@ -1,13 +1,13 @@
-package com.example.razorpayifsc.presentation.bank_details.viewmodel
+package com.example.razorpayifsc.presentation.bankdetails.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.razorpayifsc.domain.analytics.BankAnalytics
-import com.example.razorpayifsc.domain.bank_details.model.BankDetailsEntity
-import com.example.razorpayifsc.domain.bank_details.usecase.BankDetailUseCase
-import com.example.razorpayifsc.domain.bank_details.model.NetworkResponse
+import com.example.razorpayifsc.domain.bankdetails.model.BankDetailsEntity
+import com.example.razorpayifsc.domain.bankdetails.usecase.BankDetailUseCase
+import com.example.razorpayifsc.domain.bankdetails.model.NetworkResponse
 import com.example.razorpayifsc.presentation.base.State
 import com.example.razorpayifsc.presentation.base.Resource
 import com.example.razorpayifsc.utils.* // ktlint-disable no-wildcard-imports

@@ -1,4 +1,4 @@
-package com.example.razorpayifsc.domain.bank_details.model
+package com.example.razorpayifsc.domain.bankdetails.model
 
 import java.io.IOException
 

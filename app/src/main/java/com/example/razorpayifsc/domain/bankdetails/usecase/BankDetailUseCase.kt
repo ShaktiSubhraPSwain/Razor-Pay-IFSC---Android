@@ -1,7 +1,7 @@
-package com.example.razorpayifsc.domain.bank_details.usecase
+package com.example.razorpayifsc.domain.bankdetails.usecase
 
 import com.example.razorpayifsc.di.IODispatcher
-import com.example.razorpayifsc.domain.bank_details.repository.BankDetailRepository
+import com.example.razorpayifsc.domain.bankdetails.repository.BankDetailRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

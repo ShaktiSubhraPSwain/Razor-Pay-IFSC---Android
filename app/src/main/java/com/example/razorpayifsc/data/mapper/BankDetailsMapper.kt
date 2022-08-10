@@ -1,8 +1,7 @@
 package com.example.razorpayifsc.data.mapper
 
 import com.example.razorpayifsc.data.entity.BankDetailsApiEntity
-import com.example.razorpayifsc.domain.bank_details.model.BankDetailsEntity
-
+import com.example.razorpayifsc.domain.bankdetails.model.BankDetailsEntity
 
 /**
  * Mapper - BankDetailsResponseEntity to BankDetailsEntity

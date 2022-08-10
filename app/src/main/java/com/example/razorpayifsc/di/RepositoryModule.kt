@@ -1,7 +1,7 @@
 package com.example.razorpayifsc.di
 
 import com.example.razorpayifsc.data.repo.BankDetailRemoteRepositoryImpl
-import com.example.razorpayifsc.domain.bank_details.repository.BankDetailRepository
+import com.example.razorpayifsc.domain.bankdetails.repository.BankDetailRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

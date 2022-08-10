@@ -11,7 +11,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.example.razorpayifsc.presentation.bank_details.ui.BankDetailsFragment
+import com.example.razorpayifsc.presentation.bankdetails.ui.BankDetailsFragment
 import com.example.razorpayifsc.utils.callbacks.NetworkStateManager
 import com.example.razorpayifsc.presentation.utils.launchFragmentInHiltContainer
 import com.example.razorpayifsc.R

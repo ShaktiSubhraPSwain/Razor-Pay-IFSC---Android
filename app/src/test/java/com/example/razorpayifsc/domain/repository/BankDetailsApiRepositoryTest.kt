@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.razorpayifsc.* // ktlint-disable no-wildcard-imports
 import com.example.razorpayifsc.data.repo.BankDetailApi
 import com.example.razorpayifsc.data.repo.BankDetailRemoteRepositoryImpl
-import com.example.razorpayifsc.domain.bank_details.model.NetworkResponse
+import com.example.razorpayifsc.domain.bankdetails.model.NetworkResponse
 import com.example.razorpayifsc.data.network.NetworkResponseAdapterFactory
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser

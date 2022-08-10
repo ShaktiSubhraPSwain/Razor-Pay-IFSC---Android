@@ -1,4 +1,4 @@
-package com.example.razorpayifsc.presentation.bank_details.ui
+package com.example.razorpayifsc.presentation.bankdetails.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,8 +13,8 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import com.example.razorpayifsc.R
 import com.example.razorpayifsc.databinding.FragmentBankBinding
-import com.example.razorpayifsc.domain.bank_details.model.BankDetailsEntity
-import com.example.razorpayifsc.presentation.bank_details.viewmodel.BankDetailsViewModel
+import com.example.razorpayifsc.domain.bankdetails.model.BankDetailsEntity
+import com.example.razorpayifsc.presentation.bankdetails.viewmodel.BankDetailsViewModel
 import com.example.razorpayifsc.utils.callbacks.NetworkStateManager
 import com.example.razorpayifsc.presentation.dialogs.ErrorDialogFragment
 import com.example.razorpayifsc.utils.*

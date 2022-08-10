@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/bankDetailsFragment"
-        android:name="com.example.razorpayifsc.presentation.bank_details.ui.BankDetailsFragment"
+        android:name="com.example.razorpayifsc.presentation.bankdetails.ui.BankDetailsFragment"
         android:label="fragment_bank"
         tools:layout="@layout/fragment_bank" />
 </navigation>

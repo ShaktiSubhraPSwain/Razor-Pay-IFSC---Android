@@ -3,11 +3,11 @@ package com.example.razorpayifsc.presentation
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.example.razorpayifsc.domain.analytics.BankAnalytics
-import com.example.razorpayifsc.domain.bank_details.model.BankDetailsEntity
-import com.example.razorpayifsc.domain.bank_details.repository.BankDetailRepository
-import com.example.razorpayifsc.domain.bank_details.usecase.BankDetailUseCase
-import com.example.razorpayifsc.domain.bank_details.model.NetworkResponse
-import com.example.razorpayifsc.presentation.bank_details.viewmodel.BankDetailsViewModel
+import com.example.razorpayifsc.domain.bankdetails.model.BankDetailsEntity
+import com.example.razorpayifsc.domain.bankdetails.repository.BankDetailRepository
+import com.example.razorpayifsc.domain.bankdetails.usecase.BankDetailUseCase
+import com.example.razorpayifsc.domain.bankdetails.model.NetworkResponse
+import com.example.razorpayifsc.presentation.bankdetails.viewmodel.BankDetailsViewModel
 import com.example.razorpayifsc.presentation.base.Resource
 import com.google.gson.Gson
 import kotlinx.coroutines.ExperimentalCoroutinesApi

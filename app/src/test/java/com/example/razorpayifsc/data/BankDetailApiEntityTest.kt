@@ -1,7 +1,7 @@
 package com.example.razorpayifsc.data
 
 import com.example.razorpayifsc.data.mapper.toBankDetailsEntity
-import com.example.razorpayifsc.domain.bank_details.model.BankDetailsEntity
+import com.example.razorpayifsc.domain.bankdetails.model.BankDetailsEntity
 import com.example.razorpayifsc.mock.buildBankDetailResponse
 import org.junit.Assert.assertEquals
 import org.junit.Test

@@ -1,9 +1,9 @@
 package com.example.razorpayifsc.data.repo
 
 import com.example.razorpayifsc.data.mapper.toBankDetailsEntity
-import com.example.razorpayifsc.domain.bank_details.model.BankDetailsEntity
-import com.example.razorpayifsc.domain.bank_details.repository.BankDetailRepository
-import com.example.razorpayifsc.domain.bank_details.model.NetworkResponse
+import com.example.razorpayifsc.domain.bankdetails.model.BankDetailsEntity
+import com.example.razorpayifsc.domain.bankdetails.repository.BankDetailRepository
+import com.example.razorpayifsc.domain.bankdetails.model.NetworkResponse
 import javax.inject.Inject
 
 class BankDetailRemoteRepositoryImpl @Inject constructor(
