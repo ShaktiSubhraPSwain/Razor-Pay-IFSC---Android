@@ -20,7 +20,7 @@ import com.example.razorpayifsc.presentation.dialogs.ErrorDialogFragment
 import com.example.razorpayifsc.utils.*
 
 @AndroidEntryPoint
-class BankDetailsFragment : Fragment(), View.OnClickListener {
+class BankDetailsFragment : Fragment(){
 
     private lateinit var binding: FragmentBankBinding
     private val viewModel by viewModels<BankDetailsViewModel>()
@@ -37,7 +37,6 @@ class BankDetailsFragment : Fragment(), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.progressBar.hide()
         viewListener()
         initLiveDataObservers()
     }
@@ -65,28 +64,42 @@ class BankDetailsFragment : Fragment(), View.OnClickListener {
     }
 
     private fun viewListener() {
-        binding.btnSubmit.setOnClickListener(this)
-        binding.etIfscCode.addTextChangedListener(
-            afterTextChanged = { text ->
-                binding.tilIfscCode.isEndIconVisible = text?.isNotEmpty().value()
-            },
-            onTextChanged = { s, _, _, _ ->
-                binding.btnSubmit.isEnabled =
-                    viewModel.buttonEnableStatus(
-                        networkStateManager?.isInternetAvailable, s
-                    ).value()
-            }
-        )
+        with(binding) {
+            btnSubmit.setOnClickListener { submitAction() }
+            etIfscCode.addTextChangedListener(
+                afterTextChanged = { text ->
+                    tilIfscCode.isEndIconVisible = text?.isNotEmpty().value()
+                },
+                onTextChanged = { s, _, _, _ ->
+                    btnSubmit.isEnabled =
+                        viewModel.buttonEnableStatus(
+                            networkStateManager?.isInternetAvailable, s
+                        ).value()
+                }
+            )
+        }
+    }
+
+    private fun submitAction() {
+        hideKeyboard()
+        viewModel.fetchBankDetails(binding.etIfscCode.toText())
     }
 
     private fun handleBankDetailsResponse(response: Resource<BankDetailsEntity>) {
         when (response.status) {
-            is State.LoadingState -> {
-                binding.progressBar.show()
-                binding.tableBankDetails.hide()
-            }
+            is State.LoadingState -> handleLoadingState()
             is State.ErrorState -> handleBankDetailsFailure(response)
             is State.DataState -> handleSuccessResponse(response.data)
+        }
+    }
+
+    /**
+     * Handling loading state
+     */
+    private fun handleLoadingState() {
+        with(binding) {
+            progressBar.show()
+            tableBankDetails.hide()
         }
     }
 
@@ -121,15 +134,6 @@ class BankDetailsFragment : Fragment(), View.OnClickListener {
         binding.tableBankDetails.hide()
         response.throwable?.let { error ->
             ErrorDialogFragment().show(requireActivity().supportFragmentManager, error.message)
-        }
-    }
-
-    override fun onClick(view: View?) {
-        when (view?.id) {
-            binding.btnSubmit.id -> {
-                hideKeyboard()
-                viewModel.fetchBankDetails(binding.etIfscCode.toText())
-            }
         }
     }
 }
