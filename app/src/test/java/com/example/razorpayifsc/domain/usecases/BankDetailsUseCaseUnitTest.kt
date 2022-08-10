@@ -7,7 +7,7 @@ import com.example.razorpayifsc.NOT_FOUND
 import com.example.razorpayifsc.data.mapper.toBankDetailsEntity
 import com.example.razorpayifsc.domain.bank_details.repository.BankDetailRepository
 import com.example.razorpayifsc.domain.bank_details.usecase.BankDetailUseCase
-import com.example.razorpayifsc.data.network.NetworkResponse
+import com.example.razorpayifsc.domain.bank_details.model.NetworkResponse
 import com.example.razorpayifsc.mock.buildBankDetailResponse
 import io.mockk.coEvery
 import io.mockk.mockk

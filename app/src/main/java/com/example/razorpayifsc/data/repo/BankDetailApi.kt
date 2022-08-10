@@ -1,7 +1,7 @@
 package com.example.razorpayifsc.data.repo
 
 import com.example.razorpayifsc.data.entity.BankDetailsApiEntity
-import com.example.razorpayifsc.data.network.NetworkResponse
+import com.example.razorpayifsc.domain.bank_details.model.NetworkResponse
 import com.example.razorpayifsc.utils.APIConst
 import retrofit2.http.GET
 import retrofit2.http.Path

@@ -1,5 +1,6 @@
 package com.example.razorpayifsc.data.network
 
+import com.example.razorpayifsc.domain.bank_details.model.NetworkResponse
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.CallAdapter

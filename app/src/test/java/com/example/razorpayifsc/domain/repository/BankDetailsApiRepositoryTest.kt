@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.razorpayifsc.* // ktlint-disable no-wildcard-imports
 import com.example.razorpayifsc.data.repo.BankDetailApi
 import com.example.razorpayifsc.data.repo.BankDetailRemoteRepositoryImpl
-import com.example.razorpayifsc.data.network.NetworkResponse
+import com.example.razorpayifsc.domain.bank_details.model.NetworkResponse
 import com.example.razorpayifsc.data.network.NetworkResponseAdapterFactory
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser
@@ -45,7 +45,7 @@ class BankDetailsApiRepositoryTest {
 
     @Test
     fun test_Success() {
-        mockedResponse = MockResponseFileReader("bankDetailsApi/success.json").content
+        mockedResponse = MockResponseFileReader("BankDetailsApi/success.json").content
         server.enqueue(MockResponse().setResponseCode(SUCCESS_CODE).setBody(mockedResponse))
         val response = runBlocking { repository.getBankDetailFromIFSC(MOCK_IFSC_CODE) }
         val json = gson.toJson((response as NetworkResponse.Success).body)

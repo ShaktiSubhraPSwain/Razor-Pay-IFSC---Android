@@ -1,5 +1,6 @@
 package com.example.razorpayifsc.data.network
 
+import com.example.razorpayifsc.domain.bank_details.model.NetworkResponse
 import okhttp3.Request
 import okhttp3.ResponseBody
 import okio.Timeout
